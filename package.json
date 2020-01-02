@@ -1,0 +1,22 @@
+{
+  "name": "vibey-backend",
+  "version": "1.0.0",
+  "description": "Backend repo for Vibey",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vibey-Music/vibey-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vibey-Music/vibey-backend/issues"
+  },
+  "homepage": "https://github.com/Vibey-Music/vibey-backend#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
