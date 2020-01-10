@@ -1,2 +1,2 @@
-# vibey-backend
-Backend repo for Vibey, Node.js 
+# Simpy-backend
+Backend repo for Simpy, Node.js 
