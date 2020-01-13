@@ -1,2 +1,1 @@
-# Simpy-backend
-Backend repo for Simpy, Node.js 
+Simpy web app
