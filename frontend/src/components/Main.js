@@ -5,8 +5,8 @@ function Main() {
     return (
     <main>
         <Switch>
-            <Route exact="exact" path='/' component={HomePage} />
-            <Route path='/about' component={AboutPage} />
+            <Route exact="exact" path='/' component={} />
+            <Route path='/about' component={} />
         </Switch>
     </main>);
 }
