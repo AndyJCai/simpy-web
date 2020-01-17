@@ -2,13 +2,13 @@ import React from 'react';
 import logo from './logo.svg';
 import './styles/App.css';
 
-import ProfileBar from "./components/FeedPost"
+import Routes from './components/Routes';
 
 
 function App() {
   return (
     <div className="App">
-      <ProfileBar/>
+      <Routes/>
     </div>
   );
 }

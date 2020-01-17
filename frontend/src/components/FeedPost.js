@@ -12,7 +12,8 @@ class FeedPost extends React.Component {
                 <small>11 mins ago</small>
             </Toast.Header>
             <Toast.Body>Hello, world! This is a toast message.</Toast.Body>
-        </Toast>);
+        </Toast>
+        );
     }
 }
 
