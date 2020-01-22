@@ -157,7 +157,7 @@ app.get('/top/tracks', (req, res) => {
 });
 
 
-app.get('top/artists', (req, res) => {
+app.get('/top/artists', (req, res) => {
     const options = {
         url: spotify_endpoints.top_artists + querystring.stringify(JSON.parse(JSON.stringify({
             time_range: req.query.time,
@@ -168,6 +168,13 @@ app.get('top/artists', (req, res) => {
           'Authorization': 'Bearer ' + req.cookies['access_token'],
         }
     };
+    request.get(options, (error, response, body) => {
+        if (!error && response.statusCode === 200) {
+            res.send({
+                body
+            });
+        }
+    });
 });
 
 app.listen(8888, () => {
