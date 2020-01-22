@@ -12,7 +12,8 @@ const redirect_uri = 'http://localhost:8888/callback';
 
 const spotify_endpoints = {
     auth: 'https://accounts.spotify.com/authorize?',
-    top_tracks:' https://api.spotify.com/v1/me/top/tracks?' 
+    top_tracks: 'https://api.spotify.com/v1/me/top/tracks?',
+    top_artists: 'https://api.spotify.com/v1/me/top/artists?'
 };
 
 const generateRandomString = (length) => {
@@ -153,6 +154,20 @@ app.get('/top/tracks', (req, res) => {
             });
         }
     });
+});
+
+
+app.get('top/artists', (req, res) => {
+    const options = {
+        url: spotify_endpoints.top_artists + querystring.stringify(JSON.parse(JSON.stringify({
+            time_range: req.query.time,
+            limit: req.query.limit,
+            offset: req.query.offset,
+        }))),
+        headers: {
+          'Authorization': 'Bearer ' + req.cookies['access_token'],
+        }
+    };
 });
 
 app.listen(8888, () => {
