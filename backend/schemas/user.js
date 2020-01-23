@@ -15,6 +15,8 @@ const user = new mongoose.Schema({
         unique: true
     },
     spotify_id: { type: String, required: true },
+    apple_id: { type: String, required: false},
+    soundcloud_id: { type: String, required: false},
     email: {
         type: mongoose.SchemaTypes.Email,
         required: true
