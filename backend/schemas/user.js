@@ -1,9 +1,9 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 var uuid = require('node-uuid');
 require('mongoose-type-email');
 
-const user = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     username: {
         type: String,
         default: "N/A",
@@ -24,10 +24,8 @@ const user = new mongoose.Schema({
     firstName: { type: String, default: 'N/A' },
     lastName: { type: String, default: 'N/A' },
     friends: {
-        type: [user],
+        type: [String], // friends' uuid
         default: []
     }
-
 });
-const User = mongoose.model('User', userSchema);
-export default User;
+module.exports =  UserSchema;
