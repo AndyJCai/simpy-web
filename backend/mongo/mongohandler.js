@@ -14,12 +14,10 @@ class MongoHandler {
     }
 
     async addNewUser(newUser) {
-        const { UserSchema } = require('../schemas/user');
-        const userSchema = mongoose.model('simpy_users', UserSchema);
-
-        userSchema.create({ spotify_id: newUser.id, email: newUser.email, fullName: newUser.display_name }, function (err, small) {
-            if (err) return handleError(err);
-            // saved!
+        this.UserMapping.create({ spotify_id: newUser.id, email: newUser.email, fullName: newUser.display_name }, function (err, small) {
+            if (err){
+                console.log(err);
+            } 
           });
     }
 

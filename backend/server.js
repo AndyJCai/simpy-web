@@ -98,7 +98,7 @@ app.get('/callback', (req, res) => {
                 };
 
                 request.get(options, (error, response, body) => {
-                    // console.log(body);
+                    console.log(body);
                     mongoHandler.addNewUser(body);
                 });
 
