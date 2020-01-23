@@ -173,6 +173,7 @@ app.get('/top/artists', (req, res) => {
             res.send({
                 body
             });
+            console.log(body);
         }
     });
 });
