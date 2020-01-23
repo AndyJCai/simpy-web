@@ -5,6 +5,9 @@ const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
 
 const config = require('./config/config.json');
+const {MongoHandler} = require('./mongo/mongohandler');
+const mongoHandler = new MongoHandler();
+
 
 const client_id = config.client_id;
 const client_secret = config.client_secret;
@@ -95,14 +98,11 @@ app.get('/callback', (req, res) => {
                 };
 
                 request.get(options, (error, response, body) => {
-                    console.log(body);
+                    // console.log(body);
+                    mongoHandler.addNewUser(body);
                 });
 
-                res.redirect('/#' + 
-                    querystring.stringify({
-                        access_token,
-                        refresh_token
-                    }));
+                res.redirect('/#');
             } else {
                 res.redirect('/#' + 
                     querystring.stringify({

@@ -21,8 +21,7 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.Email,
         required: true
     },
-    firstName: { type: String, default: 'N/A' },
-    lastName: { type: String, default: 'N/A' },
+    fullName: { type: String, default: 'N/A' },
     friends: {
         type: [String], // friends' uuid
         default: []
