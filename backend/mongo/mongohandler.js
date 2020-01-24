@@ -21,6 +21,10 @@ class MongoHandler {
           });
     }
 
+    async addFriend(id1, id2) {
+        // TODO: finish
+    }
+
     async queryByIDPromise(id, id_owner) {
         const simpy_users = this.client.collection('simpy_users');
         var asyncUsers = new Promise(function (resolve, reject) {
