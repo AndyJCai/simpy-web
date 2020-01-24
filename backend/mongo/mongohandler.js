@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('../schemas/user');
+const Friend = require('../schemas/friend');
 
 class MongoHandler {
     constructor() {
@@ -22,7 +23,7 @@ class MongoHandler {
     }
 
     async addFriend(id1, id2) {
-        // TODO: finish
+        //TODO:
     }
 
     async queryByIDPromise(id, id_owner) {
