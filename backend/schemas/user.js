@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.Email,
         required: true
     },
-    fullName: { type: String, default: 'N/A' },
+    display_name: { type: String, default: 'N/A' },
     friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Friends' }]
 }, { timestamps: true });
 
