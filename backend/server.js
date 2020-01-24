@@ -49,14 +49,15 @@ app.get('/login', (req, res) => {
             scope: scope,
             redirect_uri: redirect_uri,
             state: state,
+            show_dialog: true
         })
     );
 });
 
-app.get('/logout', (req, res) => {
-    res.clearCookie();
-    res.sendStatus(200);
-});
+// app.get('/logout', (req, res) => {
+//     res.clearCookie();
+//     res.sendStatus(200);
+// });
 
 app.get('/callback', (req, res) => {
     const code = req.query.code || null;
