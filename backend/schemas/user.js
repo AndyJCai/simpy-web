@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
+const uuid = require('node-uuid');
 require('mongoose-type-email');
 
 const UserSchema = new mongoose.Schema({
     username: {
         type: String,
-        default: "N/A",
+        default: uuid.v4,
         unique: true,
     },
     spotify_id: { type: String, required: true },
