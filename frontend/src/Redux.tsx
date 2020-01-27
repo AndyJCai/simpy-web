@@ -10,7 +10,7 @@ function reducer(state = {}, action) {
   }
 }
 
-const rootReducer = combineReducers({ reducer });
-export default rootReducer;
+const RootReducer = combineReducers({ reducer });
+export default RootReducer;
 
 // Action functions
