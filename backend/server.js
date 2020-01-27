@@ -4,9 +4,20 @@ const cors = require('cors');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
 
-const client_id = '0afb15b457fa42348375ba8b6ea369af';
-const client_secret = 'd0b3ca78d0314b28a80dee478e854efb';
+const config = require('./config/config.json');
+const {MongoHandler} = require('./mongo/mongohandler');
+const mongoHandler = new MongoHandler();
+
+
+const client_id = config.client_id;
+const client_secret = config.client_secret;
 const redirect_uri = 'http://localhost:8888/callback';
+
+const spotify_endpoints = {
+    auth: 'https://accounts.spotify.com/authorize?',
+    top_tracks: 'https://api.spotify.com/v1/me/top/tracks?',
+    top_artists: 'https://api.spotify.com/v1/me/top/artists?'
+};
 
 const generateRandomString = (length) => {
     var text = '';
@@ -30,17 +41,23 @@ app.use(express.static(__dirname + '/public'))
 app.get('/login', (req, res) => {
     const state = generateRandomString(16);
     res.cookie(stateKey, state);
-
-    const scope = 'user-read-private user-read-email';
-    res.redirect('https://accounts.spotify.com/authorize?' + 
+    const scope = 'user-read-private user-read-email user-top-read';
+    res.redirect(spotify_endpoints.auth + 
         querystring.stringify({
             response_type: 'code',
-            client_id,
-            scope,
-            redirect_uri,
-            state
-        }));
+            client_id: client_id,
+            scope: scope,
+            redirect_uri: redirect_uri,
+            state: state,
+            show_dialog: true
+        })
+    );
 });
+
+// app.get('/logout', (req, res) => {
+//     res.clearCookie();
+//     res.sendStatus(200);
+// });
 
 app.get('/callback', (req, res) => {
     const code = req.query.code || null;
@@ -72,6 +89,9 @@ app.get('/callback', (req, res) => {
                 var access_token = body.access_token,
                     refresh_token = body.refresh_token;
 
+                res.cookie('access_token', access_token);
+                res.cookie('refresh_token', refresh_token);
+
                 var options = {
                     url: 'https://api.spotify.com/v1/me',
                     headers: { 'Authorization': 'Bearer ' + access_token },
@@ -80,13 +100,10 @@ app.get('/callback', (req, res) => {
 
                 request.get(options, (error, response, body) => {
                     console.log(body);
+                    mongoHandler.addNewUser(body);
                 });
 
-                res.redirect('/#' + 
-                    querystring.stringify({
-                        access_token,
-                        refresh_token
-                    }));
+                res.redirect('/#');
             } else {
                 res.redirect('/#' + 
                     querystring.stringify({
@@ -98,8 +115,7 @@ app.get('/callback', (req, res) => {
 });
 
 app.get('/refresh_token', (req, res) => {
-
-    const refresh_token = req.query.fefresh_token;
+    const refresh_token = req.query.refresh_token;
     var authOptions = {
         url: 'https://accounts.spotify.com/api/token',
         headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
@@ -107,6 +123,7 @@ app.get('/refresh_token', (req, res) => {
             grant_type: 'refresh_token',
             refresh_token
         },
+        
         json: true
     };
 
@@ -116,6 +133,48 @@ app.get('/refresh_token', (req, res) => {
             res.send({
                 'access_token': access_token
             });
+        }
+    });
+});
+
+app.get('/top/tracks', (req, res) => {
+    const options = {
+        url: spotify_endpoints.top_tracks + querystring.stringify(JSON.parse(JSON.stringify({
+            time_range: req.query.time,
+            limit: req.query.limit,
+            offset: req.query.offset,
+        }))),
+        headers: {
+          'Authorization': 'Bearer ' + req.cookies['access_token'],
+        }
+    };
+    request.get(options, (error, response, body) => {
+        if (!error && response.statusCode === 200) {
+            res.send({
+                body
+            });
+        }
+    });
+});
+
+
+app.get('/top/artists', (req, res) => {
+    const options = {
+        url: spotify_endpoints.top_artists + querystring.stringify(JSON.parse(JSON.stringify({
+            time_range: req.query.time,
+            limit: req.query.limit,
+            offset: req.query.offset,
+        }))),
+        headers: {
+          'Authorization': 'Bearer ' + req.cookies['access_token'],
+        }
+    };
+    request.get(options, (error, response, body) => {
+        if (!error && response.statusCode === 200) {
+            res.send({
+                body
+            });
+            console.log(body);
         }
     });
 });
