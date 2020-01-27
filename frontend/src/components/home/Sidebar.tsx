@@ -14,6 +14,12 @@ const Wrapper = styled("div")`
   left: 0px;
   font-family: Helvetica, sans-serif;
   font-size: 20px;
+  @media screen and (max-width: 1000px) {
+    font-size: 16px;
+  }
+  @media screen and (max-width: 700px) {
+    font-size: 12px;
+  }
 `;
 
 const ProfilePic = styled("img")`
@@ -21,8 +27,20 @@ const ProfilePic = styled("img")`
   width: 140px;
   height: 140px;
   background: grey;
-  margin: 60px;
+  margin: 50px;
   margin-bottom: 0px;
+  @media screen and (max-width: 1000px) {
+    width: 110px;
+    height: 110px;
+    margin: 30px;
+    margin-bottom: 0px;
+  }
+  @media screen and (max-width: 700px) {
+    width: 90px;
+    height: 90px;
+    margin: 20px;
+    margin-bottom: 0px;
+  }
 `;
 
 const Prof = styled("div")`
@@ -38,6 +56,9 @@ const Settings = styled("div")`
   display: flex;
   align-items: center;
   width: 100%;
+  @media screen and (max-width: 1000px) {
+    justify-content: center;
+  }
 `;
 
 const Cog = styled("div")`
@@ -46,6 +67,18 @@ const Cog = styled("div")`
   width: 20px;
   height: 20px;
   margin: 10px 12px 10px 40px;
+  @media screen and (max-width: 1000px) {
+    width: 15px;
+    height: 15px;
+    margin-left: 0px;
+  }
+  @media screen and (max-width: 700px) {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-right: 9px;
+    width: 12px;
+    height: 12px;
+  }
 `;
 
 const Name = styled("p")`
@@ -53,11 +86,19 @@ const Name = styled("p")`
   text-align: center;
   font-weight: bold;
   margin-bottom: 0px;
+  width: 80%;
+  @media screen and (max-width: 1000px) {
+    font-size: 26px;
+  }
+  @media screen and (max-width: 700px) {
+    font-size: 20px;
+  }
 `;
 
 const Handle = styled("p")`
   text-align: center;
   margin-top: 10px;
+  width: 90%;
 `;
 
 const Friends = styled("div")`
@@ -66,6 +107,9 @@ const Friends = styled("div")`
   border: 0.5px black solid;
   border-radius: 5px;
   padding: 10px;
+  @media screen and (max-width: 700px) {
+    padding: 7px;
+  }
 `;
 
 export default class Sidebar extends React.Component {
