@@ -15,6 +15,10 @@ const Content = styled("div")`
   align-items: center;
   font-family: Helvetica, sans-serif;
   text-align: center;
+  font-size: 24px;
+  @media screen and (max-width: 650px) {
+    font-size: 20px;
+  }
 `;
 
 const Welcome = styled("p")`
@@ -22,20 +26,21 @@ const Welcome = styled("p")`
   font-weight: bold;
   margin: 0px auto;
   width: 70%;
-`;
-
-const Desc = styled("p")`
-  font-size: 24px;
-  width: 70%;
+  @media screen and (max-width: 650px) {
+    font-size: 36px;
+  }
 `;
 
 const SpotifyButton = styled("div")`
   border: 0.5px solid black;
   border-radius: 5px;
   font-weight: bold;
-  font-size: 24px;
   margin: 50px auto 0px;
   padding: 25px 70px;
+  cursor: pointer;
+  @media screen and (max-width: 650px) {
+    padding: 20px 55px;
+  }
 `;
 
 export default class Onboard extends React.Component {
@@ -45,7 +50,9 @@ export default class Onboard extends React.Component {
         <Wrapper>
           <Content>
             <Welcome>Welcome to Simpy.</Welcome>
-            <Desc>Discover what your friends are listening to.</Desc>
+            <p style={{ width: "70%" }}>
+              Discover what your friends are listening to.
+            </p>
             <SpotifyButton>Sign up with Spotify</SpotifyButton>
           </Content>
         </Wrapper>
