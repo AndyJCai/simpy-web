@@ -3,6 +3,7 @@ const request = require("request");
 const cors = require("cors");
 const querystring = require("querystring");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 
 const config = require("./config/config.json");
 const { MongoHandler } = require("./mongo/mongohandler");
@@ -35,7 +36,7 @@ const stateKey = "spotify_auth_state";
 const app = express();
 
 app
-  .use(express.static(__dirname + "/public"))
+  .use(express.static(__dirname + "/../frontend/build/"))
   .use(cors())
   .use(cookieParser());
 
@@ -200,6 +201,10 @@ app.get("/top/artists", (req, res) => {
       console.log(body);
     }
   });
+});
+
+app.get(/\/*/, function(req, res) {
+  res.sendFile(path.join(__dirname + "/../frontend/build/"), "index.html");
 });
 
 app.listen(8888, () => {

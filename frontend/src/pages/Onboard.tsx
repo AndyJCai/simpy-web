@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link, RouteComponentProps } from "react-router-dom";
 
 const Wrapper = styled("div")`
   height: 100vh;
@@ -33,18 +34,28 @@ const Welcome = styled("p")`
 `;
 
 const SpotifyButton = styled("div")`
+  text-decoration: none;
   border: 2.5px solid black;
   border-radius: 5px;
   font-weight: bold;
   margin: 50px auto 0px;
   padding: 25px 70px;
+  color: black;
   cursor: pointer;
   @media screen and (max-width: 650px) {
     padding: 20px 55px;
   }
 `;
 
-export default class Onboard extends React.Component {
+export default class Onboard extends React.Component<RouteComponentProps> {
+  // refresh page for redirect to spotify
+  refreshTool() {
+    this.props.history.push({
+      pathname: "/login"
+    });
+    window.location.reload();
+  }
+
   render() {
     return (
       <>
@@ -54,7 +65,9 @@ export default class Onboard extends React.Component {
             <p style={{ width: "70%" }}>
               Discover what your friends are listening to.
             </p>
-            <SpotifyButton>Sign up with Spotify</SpotifyButton>
+            <SpotifyButton onClick={this.refreshTool.bind(this)}>
+              Sign up with Spotify
+            </SpotifyButton>
           </Content>
         </Wrapper>
       </>
