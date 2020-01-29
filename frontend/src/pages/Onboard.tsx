@@ -33,7 +33,7 @@ const Welcome = styled("p")`
 `;
 
 const SpotifyButton = styled("div")`
-  border: 0.5px solid black;
+  border: 2.5px solid black;
   border-radius: 5px;
   font-weight: bold;
   margin: 50px auto 0px;
