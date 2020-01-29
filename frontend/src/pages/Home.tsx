@@ -6,6 +6,7 @@ import Sidebar from "../components/home/Sidebar";
 const Wrapper = styled("div")`
   display: flex;
   width: 100%;
+  background: var(--primary-black);
 `;
 
 export default class Home extends React.Component {
