@@ -203,6 +203,13 @@ app.get("/top/artists", (req, res) => {
   });
 });
 
+// ============== Friends Stuff ==============
+app.post("/friends/add", (req, res) => {
+  
+});
+
+
+
 app.get(/\/*/, function(req, res) {
   res.sendFile(path.join(__dirname + "/../frontend/build/"), "index.html");
 });

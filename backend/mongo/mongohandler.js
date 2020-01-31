@@ -6,8 +6,8 @@ class MongoHandler {
     constructor() {
         this.RECEIPT_DB_URL = "mongodb://localhost:27017/simpy_db";
         this.client = mongoose.createConnection(this.RECEIPT_DB_URL, { useNewUrlParser: true });
-        this.UserMapping = this.client.model('simpy_users', User);
-        this.FriendRequestMapping = this.client.model("friend_requests", Friend);
+        this.UserMapping = this.client.model('Users', User);
+        this.FriendRequestMapping = this.client.model("Friends", Friend);
     }
 
     close() {
