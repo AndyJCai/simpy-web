@@ -31,10 +31,13 @@ app.get("/top/tracks", SpotifyController.tracks);
 
 app.get("/top/artists", SpotifyController.artists);
 
-// ============== Friends Stuff ==============
-app.post("/friends/add", (req, res) => {
-  
-});
+// ============== Make/Reject Friend Requests ==============
+app.post("/friends/add", UserController.addFriend);
+
+app.post("/friends/accept", UserController.acceptFriend);
+
+app.post("/friends/reject", UserController.rejectFriend);
+
 
 
 
