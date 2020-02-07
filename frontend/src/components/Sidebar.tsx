@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import SettingsCog from "../../resources/settings.svg";
+import SettingsCog from "../resources/settings.svg";
 
 const Wrapper = styled("div")`
   display: flex;
