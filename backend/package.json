@@ -1,7 +1,7 @@
 {
-  "name": "vibey-backend",
+  "name": "simpy-backend",
   "version": "1.0.0",
-  "description": "Backend repo for Vibey",
+  "description": "Backend repo for Simpy",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Vibey-Music/vibey-backend.git"
+    "url": "git+https://github.com/Simpy-Music-App/simpy-web.git"
   },
-  "author": "",
+  "author": "Andy Cai, Rahul Natarajan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Vibey-Music/vibey-backend/issues"
+    "url": "https://github.com/Simpy-Music-App/simpy-web/issues"
   },
-  "homepage": "https://github.com/Vibey-Music/vibey-backend#readme",
+  "homepage": "https://github.com/Simpy-Music-App/simpy-web#readme",
   "dependencies": {
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
