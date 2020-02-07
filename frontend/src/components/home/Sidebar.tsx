@@ -109,8 +109,12 @@ const Friends = styled("div")`
   border: 0.5px var(--primary-white) solid;
   border-radius: 5px;
   padding: 10px;
+  transition: 0.1s;
   @media screen and (max-width: 700px) {
     padding: 7px;
+  }
+  &:hover {
+    box-shadow: 0px 0px 10px white;
   }
 `;
 

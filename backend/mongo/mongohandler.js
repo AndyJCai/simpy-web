@@ -3,23 +3,14 @@ const User = require("../schemas/user");
 const Friend = require("../schemas/friends");
 
 class MongoHandler {
-<<<<<<< HEAD
   constructor() {
     this.RECEIPT_DB_URL = "mongodb://localhost:27017/simpy_db";
     this.client = mongoose.createConnection(this.RECEIPT_DB_URL, {
       useNewUrlParser: true
     });
-    this.UserMapping = this.client.model("simpy_users", User);
-    this.FriendRequestMapping = this.client.model("friend_requests", Friend);
+    this.UserMapping = this.client.model("Users", User);
+    this.FriendRequestMapping = this.client.model("Friends", Friend);
   }
-=======
-    constructor() {
-        this.RECEIPT_DB_URL = "mongodb://localhost:27017/simpy_db";
-        this.client = mongoose.createConnection(this.RECEIPT_DB_URL, { useNewUrlParser: true });
-        this.UserMapping = this.client.model('Users', User);
-        this.FriendRequestMapping = this.client.model("Friends", Friend);
-    }
->>>>>>> 57e21119679cff2ce55258e42345ba0b0f5a59e2
 
   close() {
     this.client.close();

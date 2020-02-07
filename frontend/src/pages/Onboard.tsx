@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Link, RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 
 const Wrapper = styled("div")`
   height: 100vh;
@@ -42,8 +42,13 @@ const SpotifyButton = styled("div")`
   padding: 25px 70px;
   color: black;
   cursor: pointer;
+  transition: 0.2s;
   @media screen and (max-width: 650px) {
     padding: 20px 55px;
+  }
+  &:hover {
+    color: var(--primary-yellow);
+    background-color: black;
   }
 `;
 
