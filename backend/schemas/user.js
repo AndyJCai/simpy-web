@@ -8,12 +8,13 @@ const UserSchema = new mongoose.Schema({
         default: uuid.v4,
         unique: true,
     },
-    spotify_id: { type: String, required: true },
+    spotify_id: { type: String, required: true, unique: true },
     apple_id: { type: String, required: false },
     soundcloud_id: { type: String, required: false },
     email: {
         type: mongoose.SchemaTypes.Email,
-        required: true
+        required: true,
+        unique: true
     },
     display_name: { type: String, default: 'N/A' },
     friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Friends' }]
