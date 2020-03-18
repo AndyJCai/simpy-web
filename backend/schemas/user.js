@@ -20,4 +20,4 @@ const UserSchema = new mongoose.Schema({
     friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Friends' }]
 }, { timestamps: true });
 
-module.exports = UserSchema;
+module.exports = mongoose.model('User', UserSchema);
