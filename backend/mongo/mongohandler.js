@@ -17,39 +17,19 @@ class MongoHandler {
     return;
   }
 
-
   async addNewUser(newUser) {
-    var _spotify_id = newUser.id;
-    var client = this.client;
-    var _this = this;
-    return new Promise((resolve, reject) => {
-      client.db.collection("users").find({ "spotify_id": _spotify_id }).toArray(function (err, doc) //find if a value exists
+    this.UserMapping.create(
       {
-        if (doc && doc.length) //if it does
-        {
-          console.log("Found in docs");
-          console.log(doc);
-          resolve("Found in doc, not added!");
-        }
-        else // if it does not 
-        {
-          _this.UserMapping.create(
-            {
-              spotify_id: newUser.id,
-              email: newUser.email,
-              display_name: newUser.display_name
-            },
-            function (err, small) {
-              if (err) {
-                console.log(err);
-              }
-            }
-          );
-          reject("Not found in doc, added as new user!");
+        spotify_id: newUser.id,
+        email: newUser.email,
+        display_name: newUser.display_name
+      },
+      function(err, small) {
+        if (err) {
+          console.log(err);
         }
       }
-      )
-    })
+    );
   }
 
   async makeFriendRequest(userA, userB) {
