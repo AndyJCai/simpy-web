@@ -17,7 +17,6 @@ const UserSchema = new mongoose.Schema({
         unique: true
     },
     display_name: { type: String, default: 'N/A' },
-    friends: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Friends' }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', UserSchema);

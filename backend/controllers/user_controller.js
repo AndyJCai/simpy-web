@@ -125,16 +125,4 @@ UserController.refresh = (req, res) => {
     }
 }
 
-UserController.addFriend = (req,res) => {
-  mongoHandler.makeFriendRequest(req.query.user, req.query.friend);
-}
-
-UserController.acceptFriend = (req,res) => {
-  mongoHandler.acceptFriendRequest(req.query.user, req.query.friend);
-}
-
-UserController.rejectFriend = (req,res) => {
-  mongoHandler.rejectFriendRequest(req.query.user, req.query.friend);
-}
-
 module.exports = UserController;

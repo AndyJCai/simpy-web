@@ -31,15 +31,6 @@ app.get("/top/tracks", SpotifyController.tracks);
 
 app.get("/top/artists", SpotifyController.artists);
 
-// ============== Make/Reject Friend Requests ==============
-app.post("/friends/add", UserController.addFriend);
-
-app.post("/friends/accept", UserController.acceptFriend);
-
-app.post("/friends/reject", UserController.rejectFriend);
-
-
-
 
 app.get(/\/*/, function(req, res) {
   res.sendFile(path.join(__dirname + "/../frontend/build/"), "index.html");
