@@ -7,6 +7,7 @@ const path = require("path");
 
 const UserController = require('./controllers/user_controller');
 const SpotifyController = require('./controllers/spotify_controller');
+const MongoHandler = require('./mongo/mongohandler');
 
 
 const app = express();
@@ -14,7 +15,9 @@ const app = express();
 app
   .use(express.static(__dirname + "/../frontend/build/"))
   .use(cors())
-  .use(cookieParser());
+  .use(cookieParser())
+  .use(express.urlencoded())
+  .use(express.json());
 
 app.get("/login", UserController.login);
 
@@ -30,6 +33,8 @@ app.get("/refresh_token", UserController.refresh);
 app.get("/top/tracks", SpotifyController.tracks);
 
 app.get("/top/artists", SpotifyController.artists);
+
+app.post("/follow", UserController.follow);
 
 
 app.get(/\/*/, function(req, res) {

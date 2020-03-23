@@ -125,4 +125,11 @@ UserController.refresh = (req, res) => {
     }
 }
 
+UserController.follow = (req, res) => {
+  var follower_id = req.query.follower;
+  var leader_id = req.query.leader;
+  mongoHandler.followUser(follower_id, leader_id);
+  console.log("user " + follower_id + " followed " + leader_id);
+}
+
 module.exports = UserController;

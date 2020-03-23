@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const User = require("../schemas/user");
 const Follow = require("../schemas/follow");
+const Post = require("../schemas/post");
 
 class MongoHandler {
   constructor() {
@@ -10,6 +11,7 @@ class MongoHandler {
     });
     this.UserMapping = this.client.model("Users", User);
     this.FollowMapping = this.client.model("Follows", Follow);
+    this.PostMapping = this.client("Posts", Post);
   }
 
   close() {
@@ -25,15 +27,40 @@ class MongoHandler {
         display_name: newUser.display_name
       },
       function(err, small) {
-        if (err) {
+        if (err)
           console.log(err);
-        }
       }
     );
   }
 
+  async followUser(follower, leader) {
+    this.FollowMapping.create(
+      {
+        follower: follower,
+        leader: leader
+      },
+      function(err, data) {
+        if (err)
+          console.log(err);
+      }
+    );
+  }
+
+  async unfollowUser(follower, leader) {
+    this.FollowMapping.findOneAndDelete(
+      {
+        follower: follower,
+        leader: leader
+      },
+      function(err, data) {
+        if (err)
+          console.log(err);
+      }
+    )
+  }
+
   async queryByIDPromise(id, id_owner) {
-    const simpy_users = this.client.collection("simpy_users");
+    const simpy_users = this.client.collection("User");
     var asyncUsers = new Promise(function (resolve, reject) {
       simpy_users
         .find({ id_owner: id }, { _id: 0 })
