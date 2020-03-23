@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("../schemas/user");
+const Follow = require("../schemas/follow");
 
 class MongoHandler {
   constructor() {
@@ -8,6 +9,7 @@ class MongoHandler {
       useNewUrlParser: true
     });
     this.UserMapping = this.client.model("Users", User);
+    this.FollowMapping = this.client.model("Follows", Follow);
   }
 
   close() {

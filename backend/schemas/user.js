@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const uuid = require('node-uuid');
-require('mongoose-type-email');
+const mongo_type_email = require('mongoose-type-email');
 
 const UserSchema = new mongoose.Schema({
     username: {
@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
     apple_id: { type: String, required: false },
     soundcloud_id: { type: String, required: false },
     email: {
-        type: mongoose.SchemaTypes.Email,
+        type: mongo_type_email,
         required: true,
         unique: true
     },
