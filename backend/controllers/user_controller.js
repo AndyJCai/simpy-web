@@ -132,4 +132,6 @@ UserController.follow = (req, res) => {
   console.log("user " + follower_id + " followed " + leader_id);
 }
 
+UserController.commonSongs()
+
 module.exports = UserController;

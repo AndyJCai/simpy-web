@@ -9,6 +9,7 @@ const UserController = require('./controllers/user_controller');
 const SpotifyController = require('./controllers/spotify_controller');
 const MongoHandler = require('./mongo/mongohandler');
 
+const port = process.env.PORT || 8888;
 
 const app = express();
 
@@ -41,6 +42,6 @@ app.get(/\/*/, function(req, res) {
   res.sendFile(path.join(__dirname + "/../frontend/build/"), "index.html");
 });
 
-app.listen(8888, () => {
+app.listen(port, () => {
   console.log("Server listening on port 8888.");
 });

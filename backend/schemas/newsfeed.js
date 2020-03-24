@@ -11,4 +11,4 @@ const newsFeedSchema = new Schema(
 	}
 );
 
-var NewsFeed = (module.exports = mongoose.model('NewsFeed', newsFeedSchema));
+module.exports = mongoose.model('NewsFeed', newsFeedSchema);
