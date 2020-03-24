@@ -37,6 +37,12 @@ app.get("/top/artists", SpotifyController.artists);
 
 app.post("/follow", UserController.follow);
 
+app.post("/follow", UserController.follow);
+
+app.post("/unfollow", UserController.unfollow);
+
+app.post("/top/common_tracks", UserController.common_tracks);
+
 
 app.get(/\/*/, function(req, res) {
   res.sendFile(path.join(__dirname + "/../frontend/build/"), "index.html");

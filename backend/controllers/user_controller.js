@@ -9,6 +9,10 @@ const client_id = config.client_id;
 const client_secret = config.client_secret;
 const redirect_uri = "http://localhost:8888/callback";
 
+const redis = require('redis');
+const port_redis = process.env.PORT || 5000;
+var redis_client = redis.createClient();
+
 const spotify_endpoints = {
   auth: "https://accounts.spotify.com/authorize?",
 };
@@ -132,6 +136,17 @@ UserController.follow = (req, res) => {
   console.log("user " + follower_id + " followed " + leader_id);
 }
 
-UserController.commonSongs()
+UserController.unfollow = (req, res) => {
+  var follower_id = req.query.follower;
+  var leader_id = req.query.leader;
+  mongoHandler.unfollowUser(follower_id, leader_id);
+  console.log("user " + follower_id + " unfollowed " + leader_id);
+}
+
+UserController.common_tracks = (req, res) => {
+  var follower_id = req.query.follower;
+  var leader_id = req.query.leader;
+  var num_common = req.query.num;
+}
 
 module.exports = UserController;

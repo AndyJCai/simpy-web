@@ -52,28 +52,40 @@ SpotifyController.tracks = (req, res) => {
 };
 
 SpotifyController.artists = (req, res) => {
-	const options = {
-		url:
-			spotify_endpoints.top_artists +
-			querystring.stringify(
-				JSON.parse(
-					JSON.stringify({
-						time_range: req.query.time,
-						limit: req.query.limit,
-						offset: req.query.offset,
-					})
-				)
-			),
-		headers: {
-			Authorization: 'Bearer ' + req.cookies['access_token'],
-		},
-	};
-	request.get(options, (error, response, body) => {
-		if (!error && response.statusCode === 200) {
-			res.send({
-				body,
+	redis_client.exists('top_artists/' + current_user_id, (err, reply) => {
+		if (reply == 1) {
+			redis_client.get('top_artists/' + current_user_id /* TODO: change to current user's id*/, (err, result) => {
+				res.send({ result });
 			});
-			console.log(body);
+		} else {
+			const options = {
+				url:
+					spotify_endpoints.top_artists +
+					querystring.stringify(
+						JSON.parse(
+							JSON.stringify({
+								time_range: req.query.time,
+								limit: req.query.limit,
+								offset: req.query.offset,
+							})
+						)
+					),
+				headers: {
+					Authorization: 'Bearer ' + req.cookies['access_token'],
+				},
+			};
+			request.get(options, (error, response, body) => {
+				if (!error && response.statusCode === 200) {
+					res.send({
+						body,
+					});
+					redis_client.setex(
+						'top_artists/' + current_user_id /* TODO: change to current user's id*/,
+						300,
+						JSON.stringify(body)
+					);
+				}
+			});
 		}
 	});
 };
