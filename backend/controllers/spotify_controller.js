@@ -12,6 +12,39 @@ const spotify_endpoints = {
 
 var SpotifyController = {};
 
+//get the tracks from the Spotify API
+SpotifyController.tracks_api = (req, res) => {
+  const options = {
+    url:
+      spotify_endpoints.top_tracks +
+      querystring.stringify(
+        JSON.parse(
+          JSON.stringify({
+            time_range: req.query.time,
+            limit: req.query.limit,
+            offset: req.query.offset,
+          })
+        )
+      ),
+    headers: {
+      Authorization: 'Bearer ' + req.cookies['access_token'],
+    },
+  };
+  request.get(options, (error, response, body) => {
+    if (!error && response.statusCode === 200) {
+      res.send({
+        body,
+      });
+      redis_client.setex(
+        'top_tracks/' + current_user_id /* TODO: change to current user's id*/,
+        300,
+        JSON.stringify(body)
+      );
+    }
+  });
+}
+
+// uses both 
 SpotifyController.tracks = (req, res) => {
 	redis_client.exists('top_tracks/' + current_user_id, (err, reply) => {
 		if (reply == 1) {
@@ -19,34 +52,7 @@ SpotifyController.tracks = (req, res) => {
 				res.send({ result });
 			});
 		} else {
-			const options = {
-				url:
-					spotify_endpoints.top_tracks +
-					querystring.stringify(
-						JSON.parse(
-							JSON.stringify({
-								time_range: req.query.time,
-								limit: req.query.limit,
-								offset: req.query.offset,
-							})
-						)
-					),
-				headers: {
-					Authorization: 'Bearer ' + req.cookies['access_token'],
-				},
-			};
-			request.get(options, (error, response, body) => {
-				if (!error && response.statusCode === 200) {
-					res.send({
-						body,
-					});
-					redis_client.setex(
-						'top_tracks/' + current_user_id /* TODO: change to current user's id*/,
-						300,
-						JSON.stringify(body)
-					);
-				}
-			});
+			SpotifyController.tracks_api(req, res);
 		}
 	});
 };
