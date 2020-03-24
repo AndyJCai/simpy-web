@@ -14,30 +14,40 @@ const spotify_endpoints = {
 var SpotifyController = {};
 
 SpotifyController.tracks = (req, res) => {
-    const options = {
-      url:
-        spotify_endpoints.top_tracks +
-        querystring.stringify(
-          JSON.parse(
-            JSON.stringify({
-              time_range: req.query.time,
-              limit: req.query.limit,
-              offset: req.query.offset
-            })
-          )
-        ),
-      headers: {
-        Authorization: "Bearer " + req.cookies["access_token"]
-      }
-    };
-    request.get(options, (error, response, top_tracks) => {
-      if (!error && response.statusCode === 200) {
-        res.send({
-          top_tracks
+    
+    var top_tracks;
+    redis_client.exists("top_tracks/" + current_user_id, (err, reply) => {
+      if (reply == 1) {
+        redis_client.get("top_tracks/" + current_user_id /* TODO: change to current user's id*/, (err, result) => {
+          top_tracks = result;
+        })
+      } else {
+        const options = {
+          url:
+            spotify_endpoints.top_tracks +
+            querystring.stringify(
+              JSON.parse(
+                JSON.stringify({
+                  time_range: req.query.time,
+                  limit: req.query.limit,
+                  offset: req.query.offset
+                })
+              )
+            ),
+          headers: {
+            Authorization: "Bearer " + req.cookies["access_token"]
+          }
+        };
+        request.get(options, (error, response, top_tracks) => {
+          if (!error && response.statusCode === 200) {
+            res.send({
+              top_tracks
+            });
+            redis_client.setex("top_tracks/" + current_user_id /* TODO: change to current user's id*/, 300, JSON.stringify(top_tracks)) 
+          }
         });
-        redis_client.setex("top_tracks:" + current_user_id /* TODO: change to current user's id*/, 300, JSON.stringify(top_tracks)) 
       }
-    });
+    })
 };
   
 SpotifyController.artists = (req, res) => {
