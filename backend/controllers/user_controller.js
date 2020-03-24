@@ -143,6 +143,28 @@ UserController.unfollow = (req, res) => {
   console.log("user " + follower_id + " unfollowed " + leader_id);
 }
 
+UserController.getFollowers = (req, res) => {
+  var user_id=req.params.user_id;
+  mongoHandler.FollowMapping.find({follow_id:mongoose.mongo.ObjectID(user_id)})
+    .populate('follow_id')
+    .exec(function(err,followers){
+     if(!err && followers){ 
+        res.send({followers:followers});
+     }
+  });
+}
+
+UserController.getFollowings = (req, res) => {
+  var user_id=req.params.user_id;
+  mongoHandler.FollowMapping.find({follow_id:mongoose.mongo.ObjectID(user_id)})
+    .populate('leader_id')
+    .exec(function(err,followings){
+     if(!err && followings){ 
+        res.send({followings:followings});
+     }
+  });
+}
+
 UserController.common_tracks = (req, res) => {
   var follower_id = req.query.follower;
   var leader_id = req.query.leader;

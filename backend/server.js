@@ -35,13 +35,15 @@ app.get("/top/tracks", SpotifyController.tracks);
 
 app.get("/top/artists", SpotifyController.artists);
 
-app.post("/follow", UserController.follow);
+app.post("/top/common_tracks", UserController.common_tracks);
 
 app.post("/follow", UserController.follow);
 
 app.post("/unfollow", UserController.unfollow);
 
-app.post("/top/common_tracks", UserController.common_tracks);
+app.get("/following/:user_id", UserController.getFollowings);
+
+app.get("/followers/:user_id", UserController.getFollowers);
 
 
 app.get(/\/*/, function(req, res) {
