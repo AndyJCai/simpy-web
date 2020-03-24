@@ -11,7 +11,7 @@ class MongoHandler {
     });
     this.UserMapping = this.client.model("Users", User);
     this.FollowMapping = this.client.model("Follows", Follow);
-    this.PostMapping = this.client("Posts", Post);
+    this.PostMapping = this.client.model("Posts", Post);
   }
 
   close() {

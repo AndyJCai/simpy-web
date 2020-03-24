@@ -144,8 +144,8 @@ UserController.unfollow = (req, res) => {
 }
 
 UserController.getFollowers = (req, res) => {
-  var user_id=req.params.user_id;
-  mongoHandler.FollowMapping.find({follow_id:mongoose.mongo.ObjectID(user_id)})
+  var userid=req.params.user_id;
+  mongoHandler.FollowMapping.find({follow_id:mongoose.mongo.ObjectID(userid)})
     .populate('follow_id')
     .exec(function(err,followers){
      if(!err && followers){ 
@@ -155,8 +155,8 @@ UserController.getFollowers = (req, res) => {
 }
 
 UserController.getFollowings = (req, res) => {
-  var user_id=req.params.user_id;
-  mongoHandler.FollowMapping.find({follow_id:mongoose.mongo.ObjectID(user_id)})
+  var userid=req.params.user_id;
+  mongoHandler.FollowMapping.find({follow_id:mongoose.mongo.ObjectID(userid)})
     .populate('leader_id')
     .exec(function(err,followings){
      if(!err && followings){ 

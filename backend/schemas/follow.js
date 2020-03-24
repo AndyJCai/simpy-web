@@ -9,4 +9,5 @@ const FollowSchema = new Schema(
 	{ collection: 'Follow' }
 );
 
-module.exports = mongoose.model('Follow', FollowSchema);
+// module.exports = mongoose.model('Follow', FollowSchema);
+module.exports = FollowSchema;
