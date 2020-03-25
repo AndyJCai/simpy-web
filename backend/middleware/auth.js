@@ -9,7 +9,9 @@ class Middleware {
         });
     }
 
-    get_current_user = (req) => {
+    static get_current_user = (req) => {
+        if (req == null)
+            return null;
         console.log(req.headers['access']);
         return req.headers['access'];
     }

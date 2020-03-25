@@ -77,8 +77,6 @@ class MongoHandler {
   }
 }
 
-var mongoHandler = new MongoHandler();
-
 module.exports = {
-  mongoHandler
+  MongoHandler
 };

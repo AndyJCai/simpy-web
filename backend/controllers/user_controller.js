@@ -2,7 +2,8 @@ const
   request = require("request"),
   querystring = require("querystring"),
   config = require("../config/config.json"),
-  mongoHandler = require("../mongo/mongohandler"),
+  { MongoHandler } = require("../mongo/mongohandler"),
+  mongoHandler = new MongoHandler(),
   client_id = config.client_id,
   client_secret = config.client_secret,
   redirect_uri = "http://localhost:8888/callback";
@@ -151,7 +152,6 @@ UserController.unfollow = (req, res) => {
     console.log("Undefined follower id!");
     return;
   }
-
   if (!leader) {
     console.log("Undefined leader id!");
     return;

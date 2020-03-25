@@ -1,19 +1,22 @@
-const express = require("express");
-const request = require("request");
-const cors = require("cors");
-const querystring = require("querystring");
-const cookieParser = require("cookie-parser");
-const path = require("path");
+const 
+  express = require("express"),
+  request = require("request"),
+  cors = require("cors"),
+  querystring = require("querystring"),
+  cookieParser = require("cookie-parser"),
+  path = require("path");
 
-const UserController = require('./controllers/user_controller');
-const SpotifyController = require('./controllers/spotify_controller');
-const MongoHandler = require('./mongo/mongohandler');
+const 
+  UserController = require('./controllers/user_controller'),
+  SpotifyController = require('./controllers/spotify_controller'),
+  MongoHandler = require('./mongo/mongohandler');
 
-const {Middleware} = require('./middleware/auth');
+const 
+  {Middleware} = require('./middleware/auth'),
+  middleware = new Middleware(),
+  {rclient, cacheMiddleware} = require('./redis_cache');
 
-const middleware = new Middleware();
-
-const port = process.env.PORT || 8888;
+const PORT = process.env.PORT || 8888;
 
 const app = express();
 
@@ -37,7 +40,10 @@ app.get("/callback", UserController.callback);
 
 app.get("/refresh_token", UserController.refresh);
 
-app.get("/auth/top/tracks", SpotifyController.tracks);
+// app.get("/auth/top/tracks", cacheMiddleware("/top_tracks" + middleware.get_current_user(), 30), SpotifyController.tracks);
+
+// testing function
+app.get("/top/tracks", SpotifyController.tracks);
 
 app.get("/auth/top/artists", SpotifyController.artists);
 
@@ -56,6 +62,6 @@ app.get(/\/*/, function(req, res) {
   res.sendFile(path.join(__dirname + "/../frontend/build/"), "index.html");
 });
 
-app.listen(port, () => {
-  console.log("Server listening on port 8888.");
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${port}.`);
 });
