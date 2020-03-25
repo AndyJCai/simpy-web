@@ -1,17 +1,13 @@
-const request = require("request");
-const querystring = require("querystring");
+const 
+  request = require("request"),
+  querystring = require("querystring"),
+  config = require("../config/config.json"),
+  mongoHandler = require("../mongo/mongohandler"),
+  client_id = config.client_id,
+  client_secret = config.client_secret,
+  redirect_uri = "http://localhost:8888/callback";
 
-const config = require("../config/config.json");
-const { MongoHandler } = require("../mongo/mongohandler");
-const mongoHandler = new MongoHandler();
-
-const client_id = config.client_id;
-const client_secret = config.client_secret;
-const redirect_uri = "http://localhost:8888/callback";
-
-const redis = require('redis');
-const port_redis = process.env.PORT || 5000;
-var redis_client = redis.createClient();
+var {rclient} = require('../redis_cache'); 
 
 const spotify_endpoints = {
   auth: "https://accounts.spotify.com/authorize?",

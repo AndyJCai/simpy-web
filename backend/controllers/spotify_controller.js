@@ -1,7 +1,7 @@
 var 
 	request = require('request'),
-	rclient = require('../redis_cache');
-	
+	{rclient, cacheMiddleware} = require('../redis_cache');
+
 const 
 	querystring = require('querystring'),
 	{Middleware} = require('../middleware/auth'),
@@ -38,7 +38,7 @@ SpotifyController.tracks_api = (req, res) => {
       res.send({
         body,
       });
-      redis_client.setex(
+      rclient.setex(
         'top_tracks/' + middleware.get_current_user(req),
         300,
         JSON.stringify(body)
@@ -49,10 +49,10 @@ SpotifyController.tracks_api = (req, res) => {
 
 // uses both 
 SpotifyController.tracks = (req, res) => {
-	redis_client.exists('top_tracks/' + middleware.get_current_user(req), (err, reply) => {
+	rclient.exists('top_tracks/' + middleware.get_current_user(req), (err, reply) => {
 		if (reply == 1) {
 			console.log("redis");
-			redis_client.get('top_tracks/' + middleware.get_current_user(req) /* TODO: change to current user's id*/, (err, result) => {
+			rclient.get('top_tracks/' + middleware.get_current_user(req) /* TODO: change to current user's id*/, (err, result) => {
 				res.send({ result });
 			});
 		} else {
@@ -63,9 +63,9 @@ SpotifyController.tracks = (req, res) => {
 };
 
 SpotifyController.artists = (req, res) => {
-	redis_client.exists('top_artists/' + middleware.get_current_user(req), (err, reply) => {
+	rclient.exists('top_artists/' + middleware.get_current_user(req), (err, reply) => {
 		if (reply == 1) {
-			redis_client.get('top_artists/' + middleware.get_current_user(req) /* TODO: change to current user's id*/, (err, result) => {
+			rclient.get('top_artists/' + middleware.get_current_user(req) /* TODO: change to current user's id*/, (err, result) => {
 				res.send({ result });
 			});
 		} else {
@@ -90,7 +90,7 @@ SpotifyController.artists = (req, res) => {
 					res.send({
 						body,
 					});
-					redis_client.setex(
+					rclient.setex(
 						'top_artists/' + middleware.get_current_user(req) /* TODO: change to current user's id*/,
 						300,
 						JSON.stringify(body)
