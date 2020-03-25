@@ -36,8 +36,8 @@ class MongoHandler {
   async followUser(follower, leader) {
     this.FollowMapping.create(
       {
-        follower: follower,
-        leader: leader
+        follow_spotify_id: follower,
+        leader_spotify_id: leader
       },
       function(err, data) {
         if (err)
@@ -49,8 +49,8 @@ class MongoHandler {
   async unfollowUser(follower, leader) {
     this.FollowMapping.findOneAndDelete(
       {
-        follower: follower,
-        leader: leader
+        follow_spotify_id: follower,
+        leader_spotify_id: leader
       },
       function(err, data) {
         if (err)

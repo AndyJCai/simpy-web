@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const FollowSchema = new Schema(
 	{
-		follow_id: { type: Schema.Types.ObjectId, required: true, ref: 'User' }, // person following
-		leader_id: { type: Schema.Types.ObjectId, required: true, ref: 'User' }, // person being followed
+		follow_spotify_id: { type: String, required: true }, // person following
+		leader_spotify_id: { type: String, required: true }, // person being followed
 	},
 	{ collection: 'Follow' }
 );

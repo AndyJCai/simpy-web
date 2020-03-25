@@ -130,39 +130,62 @@ UserController.refresh = (req, res) => {
 }
 
 UserController.follow = (req, res) => {
-  var follower_id = req.query.follower;
-  var leader_id = req.query.leader;
-  mongoHandler.followUser(follower_id, leader_id);
-  console.log("user " + follower_id + " followed " + leader_id);
+  var follower = req.query.follower_id;
+  var leader = req.query.leader_id;
+
+  if (!follower) {
+    console.log("Undefined follower id!");
+    return;
+  }
+
+  if (!leader) {
+    console.log("Undefined leader id!");
+    return;
+  }
+
+  mongoHandler.followUser(follower, leader);
+  console.log("user " + follower + " followed " + leader);
 }
 
 UserController.unfollow = (req, res) => {
-  var follower_id = req.query.follower;
-  var leader_id = req.query.leader;
-  mongoHandler.unfollowUser(follower_id, leader_id);
-  console.log("user " + follower_id + " unfollowed " + leader_id);
+  var follower = req.query.follower_id;
+  var leader = req.query.leader_id;
+
+  if (!follower) {
+    console.log("Undefined follower id!");
+    return;
+  }
+
+  if (!leader) {
+    console.log("Undefined leader id!");
+    return;
+  }
+
+  mongoHandler.unfollowUser(follower, leader);
+  console.log("user " + follower + " unfollowed " + leader);
 }
 
+// return a JSON of all the users that follow the current user 
 UserController.getFollowers = (req, res) => {
   var userid=req.params.user_id;
-  mongoHandler.FollowMapping.find({follow_id:mongoose.mongo.ObjectID(userid)})
-    .populate('follow_id')
-    .exec(function(err,followers){
-     if(!err && followers){ 
-        res.send({followers:followers});
-     }
+  var result = []
+  mongoHandler.FollowMapping.find({leader_spotify_id: userid}).forEach(e => {
+    result.push(mongoHandler.UserMapping.findOne({spotify_id: e.leader_spotify_id}))
   });
+  res.send({followers: result});
+  console.log("user %s")
 }
 
+// return a JSON of all the users that the current user follows
 UserController.getFollowings = (req, res) => {
   var userid=req.params.user_id;
-  mongoHandler.FollowMapping.find({follow_id:mongoose.mongo.ObjectID(userid)})
-    .populate('leader_id')
-    .exec(function(err,followings){
-     if(!err && followings){ 
-        res.send({followings:followings});
-     }
+  var result = []
+  mongoHandler.FollowMapping.find({follow_spotify_id: userid}).forEach(e => {
+    result.push(mongoHandler.UserMapping.findOne({spotify_id: e.follow_spotify_id }))
   });
+  if (result.length != 0) {
+    res.send({followings: result});
+  }
 }
 
 UserController.common_tracks = (req, res) => {
