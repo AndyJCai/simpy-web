@@ -83,7 +83,7 @@ UserController.callback = (req, res) => {
         if (!error && response.statusCode === 200) {
           var access_token = body.access_token,
             refresh_token = body.refresh_token;
-  
+          
           res.cookie("access_token", access_token);
           res.cookie("refresh_token", refresh_token);
   
@@ -94,8 +94,8 @@ UserController.callback = (req, res) => {
           };
   
           request.get(options, (error, response, body) => {
-            console.log(body);
             mongoHandler.addNewUser(body);
+            console.log(body)
           });
   
           res.redirect("/#");

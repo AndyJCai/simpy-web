@@ -5,6 +5,9 @@ const redis = require('redis');
 const port_redis = process.env.PORT || 5000;
 var redis_client = redis.createClient();
 
+const {Middleware} = require('../middleware/auth');
+middleware = new Middleware();
+
 const spotify_endpoints = {
 	top_tracks: 'https://api.spotify.com/v1/me/top/tracks?',
 	top_artists: 'https://api.spotify.com/v1/me/top/artists?',
@@ -32,11 +35,12 @@ SpotifyController.tracks_api = (req, res) => {
   };
   request.get(options, (error, response, body) => {
     if (!error && response.statusCode === 200) {
+		console.log(body);
       res.send({
         body,
       });
       redis_client.setex(
-        'top_tracks/' + current_user_id /* TODO: change to current user's id*/,
+        'top_tracks/' + middleware.get_current_user(req) /* TODO: change to current user's id*/,
         300,
         JSON.stringify(body)
       );
@@ -46,21 +50,23 @@ SpotifyController.tracks_api = (req, res) => {
 
 // uses both 
 SpotifyController.tracks = (req, res) => {
-	redis_client.exists('top_tracks/' + current_user_id, (err, reply) => {
+	redis_client.exists('top_tracks/' + middleware.get_current_user(req), (err, reply) => {
 		if (reply == 1) {
-			redis_client.get('top_tracks/' + current_user_id /* TODO: change to current user's id*/, (err, result) => {
+			console.log("redis");
+			redis_client.get('top_tracks/' + middleware.get_current_user(req) /* TODO: change to current user's id*/, (err, result) => {
 				res.send({ result });
 			});
 		} else {
+			console.log("api");
 			SpotifyController.tracks_api(req, res);
 		}
 	});
 };
 
 SpotifyController.artists = (req, res) => {
-	redis_client.exists('top_artists/' + current_user_id, (err, reply) => {
+	redis_client.exists('top_artists/' + middleware.get_current_user(req), (err, reply) => {
 		if (reply == 1) {
-			redis_client.get('top_artists/' + current_user_id /* TODO: change to current user's id*/, (err, result) => {
+			redis_client.get('top_artists/' + middleware.get_current_user(req) /* TODO: change to current user's id*/, (err, result) => {
 				res.send({ result });
 			});
 		} else {
@@ -86,7 +92,7 @@ SpotifyController.artists = (req, res) => {
 						body,
 					});
 					redis_client.setex(
-						'top_artists/' + current_user_id /* TODO: change to current user's id*/,
+						'top_artists/' + middleware.get_current_user(req) /* TODO: change to current user's id*/,
 						300,
 						JSON.stringify(body)
 					);

@@ -9,6 +9,10 @@ const UserController = require('./controllers/user_controller');
 const SpotifyController = require('./controllers/spotify_controller');
 const MongoHandler = require('./mongo/mongohandler');
 
+const {Middleware} = require('./middleware/auth');
+
+middleware = new Middleware()
+
 const port = process.env.PORT || 8888;
 
 const app = express();
@@ -19,6 +23,8 @@ app
   .use(cookieParser())
   .use(express.urlencoded())
   .use(express.json());
+
+  middleware.verify(app);
 
 app.get("/login", UserController.login);
 
@@ -31,19 +37,19 @@ app.get("/callback", UserController.callback);
 
 app.get("/refresh_token", UserController.refresh);
 
-app.get("/top/tracks", SpotifyController.tracks);
+app.get("/auth/top/tracks", SpotifyController.tracks);
 
-app.get("/top/artists", SpotifyController.artists);
+app.get("/auth/top/artists", SpotifyController.artists);
 
-app.post("/top/common_tracks", UserController.common_tracks);
+app.post("/auth/top/common_tracks", UserController.common_tracks);
 
-app.post("/follow", UserController.follow);
+app.post("/auth/follow", UserController.follow);
 
-app.post("/unfollow", UserController.unfollow);
+app.post("/auth/unfollow", UserController.unfollow);
 
-app.get("/following/:user_id", UserController.getFollowings);
+app.get("/auth/following/:user_id", UserController.getFollowings);
 
-app.get("/followers/:user_id", UserController.getFollowers);
+app.get("/auth/followers/:user_id", UserController.getFollowers);
 
 
 app.get(/\/*/, function(req, res) {
