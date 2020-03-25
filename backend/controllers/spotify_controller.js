@@ -1,12 +1,11 @@
-const request = require('request');
-const querystring = require('querystring');
-
-const redis = require('redis');
-const port_redis = process.env.PORT || 5000;
-var redis_client = redis.createClient();
-
-const {Middleware} = require('../middleware/auth');
-middleware = new Middleware();
+var 
+	request = require('request'),
+	rclient = require('../redis_cache');
+	
+const 
+	querystring = require('querystring'),
+	{Middleware} = require('../middleware/auth'),
+	middleware = new Middleware();
 
 const spotify_endpoints = {
 	top_tracks: 'https://api.spotify.com/v1/me/top/tracks?',
@@ -40,7 +39,7 @@ SpotifyController.tracks_api = (req, res) => {
         body,
       });
       redis_client.setex(
-        'top_tracks/' + middleware.get_current_user(req) /* TODO: change to current user's id*/,
+        'top_tracks/' + middleware.get_current_user(req),
         300,
         JSON.stringify(body)
       );

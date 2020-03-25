@@ -11,7 +11,7 @@ const MongoHandler = require('./mongo/mongohandler');
 
 const {Middleware} = require('./middleware/auth');
 
-middleware = new Middleware()
+const middleware = new Middleware();
 
 const port = process.env.PORT || 8888;
 
@@ -24,7 +24,7 @@ app
   .use(express.urlencoded())
   .use(express.json());
 
-  middleware.verify(app);
+middleware.verify(app);
 
 app.get("/login", UserController.login);
 
