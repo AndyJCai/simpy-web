@@ -1,4 +1,5 @@
-const request = require('request'),
+const 
+  request = require('request'),
 	querystring = require('querystring'),
 	config = require('../config/config.json'),
 	{ MongoHandler } = require('../mongo/mongohandler'),
@@ -7,7 +8,7 @@ const request = require('request'),
 	client_secret = config.client_secret,
 	redirect_uri = 'http://localhost:8888/callback';
 
-var { rclient } = require('../redis_cache');
+var { rclient } = require('../middleware/redis_cache');
 
 const spotify_endpoints = {
 	auth: 'https://accounts.spotify.com/authorize?',

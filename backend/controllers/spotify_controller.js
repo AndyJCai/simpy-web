@@ -1,7 +1,6 @@
 var request = require('request'),
-	{ rclient } = require('../redis_cache'),
+	{ rclient } = require('../middleware/redis_cache'),
 	axios = require('axios');
-// rclient = redis.createClient(6379);
 
 const querystring = require('querystring'),
 	{ Middleware } = require('../middleware/auth'),
@@ -36,7 +35,6 @@ SpotifyController.tracks_api = (req, res) => {
 
 // uses whichever redis and Spotify API is available
 SpotifyController.tracks = (req, res) => {
-	userid = req.params.userid || middleware.get_current_user(req);
 	rclient.exists('top_tracks/' + middleware.get_current_user(req), (err, reply) => {
 		if (reply == 1) {
 			console.log('Retrieved top tracks from redis cache.');
