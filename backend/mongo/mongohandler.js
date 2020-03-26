@@ -36,7 +36,7 @@ class MongoHandler {
     var followingMapping = this.FollowMapping;
 		followingMapping.find({ follow_spotify_id: follower, leader_spotify_id: leader }, function(err, docs) {
 			if (docs.length) {
-				console.error('Following relatinoship exists already!');
+				console.error('Following relatinoship exists already');
 			} else {
 				followingMapping.create(
 					{
