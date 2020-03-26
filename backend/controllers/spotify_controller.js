@@ -1,6 +1,7 @@
 var request = require('request'),
 	{ rclient } = require('../middleware/redis_cache'),
-	axios = require('axios');
+	axios = require('axios'),
+	schedule = require('node-schedule');
 
 const querystring = require('querystring'),
 	{ Middleware } = require('../middleware/auth'),
@@ -79,5 +80,8 @@ SpotifyController.artists = (req, res) => {
 		}
 	});
 };
+
+schedule.scheduleJob('0 0 * * *', SpotifyController.tracks_api);
+schedule.scheduleJob('0 0 * * *', SpotifyController.artists_api);
 
 module.exports = SpotifyController;
