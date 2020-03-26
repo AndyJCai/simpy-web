@@ -61,6 +61,10 @@ app.get("/following/:user_id", UserController.getFollowings);
 
 app.get("/followers/:user_id", UserController.getFollowers);
 
+app.post("/follow", UserController.follow);
+
+app.post("/unfollow", UserController.unfollow);
+
 
 app.get(/\/*/, function(req, res) {
   res.sendFile(path.join(__dirname + "/../frontend/build/"), "index.html");

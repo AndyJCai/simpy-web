@@ -8,8 +8,8 @@ const querystring = require('querystring'),
 	middleware = new Middleware();
 
 const spotify_endpoints = {
-	top_tracks: 'https://api.spotify.com/v1/me/top/tracks?',
-	top_artists: 'https://api.spotify.com/v1/me/top/artists?',
+	top_tracks: 'https://api.spotify.com/v1/me/top/tracks',
+	top_artists: 'https://api.spotify.com/v1/me/top/artists',
 };
 
 var SpotifyController = {};
