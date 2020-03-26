@@ -39,14 +39,6 @@ app.get("/callback", UserController.callback);
 
 app.get("/refresh_token", UserController.refresh);
 
-// app.get("/auth/top/tracks", cacheMiddleware("/top_tracks" + middleware.get_current_user(), 30), SpotifyController.tracks);
-
-// testing function
-app.get("/top/tracks", SpotifyController.tracks);
-
-app.get("/top/tracks", SpotifyController.tracks);
-
-
 app.get("/auth/top/artists", SpotifyController.artists);
 
 app.post("/auth/top/common_tracks", UserController.common_tracks);
@@ -58,6 +50,11 @@ app.post("/auth/unfollow", UserController.unfollow);
 app.get("/auth/following/:user_id", UserController.getFollowings);
 
 app.get("/auth/followers/:user_id", UserController.getFollowers);
+
+// testing functions 
+app.get("/top/tracks", SpotifyController.tracks);
+
+app.get("/top/artists", SpotifyController.artists);
 
 
 app.get(/\/*/, function(req, res) {
