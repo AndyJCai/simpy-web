@@ -13,8 +13,7 @@ const
 
 const 
   {Middleware} = require('./middleware/auth'),
-  middleware = new Middleware(),
-  {rclient, cacheMiddleware} = require('./redis_cache');
+  middleware = new Middleware();
 
 const PORT = process.env.PORT || 8888;
 
@@ -45,6 +44,9 @@ app.get("/refresh_token", UserController.refresh);
 // testing function
 app.get("/top/tracks", SpotifyController.tracks);
 
+app.get("/top/tracks", SpotifyController.tracks);
+
+
 app.get("/auth/top/artists", SpotifyController.artists);
 
 app.post("/auth/top/common_tracks", UserController.common_tracks);
@@ -63,5 +65,5 @@ app.get(/\/*/, function(req, res) {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server listening on port ${port}.`);
+  console.log(`Server listening on port ${PORT}.`);
 });
