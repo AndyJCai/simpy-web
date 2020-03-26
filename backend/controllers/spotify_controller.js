@@ -36,6 +36,7 @@ SpotifyController.tracks_api = (req, res) => {
 
 // uses whichever redis and Spotify API is available
 SpotifyController.tracks = (req, res) => {
+	userid = req.params.userid || middleware.get_current_user(req);
 	rclient.exists('top_tracks/' + middleware.get_current_user(req), (err, reply) => {
 		if (reply == 1) {
 			console.log('Retrieved top tracks from redis cache.');

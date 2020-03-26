@@ -57,6 +57,11 @@ app.get("/top/tracks", SpotifyController.tracks);
 app.get("/top/artists", SpotifyController.artists);
 
 
+app.get("/following/:user_id", UserController.getFollowings);
+
+app.get("/followers/:user_id", UserController.getFollowers);
+
+
 app.get(/\/*/, function(req, res) {
   res.sendFile(path.join(__dirname + "/../frontend/build/"), "index.html");
 });
