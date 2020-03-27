@@ -1,11 +1,13 @@
-var request = require('request'),
-	{ rclient } = require('../middleware/redis_cache'),
+const 
 	axios = require('axios'),
 	schedule = require('node-schedule');
 
-const querystring = require('querystring'),
+const
+	{ rclient } = require('../middleware/redis_cache'),
 	{ Middleware } = require('../middleware/auth'),
-	middleware = new Middleware();
+	middleware = new Middleware(),
+	{ MongoHandler } = require('../mongo/mongohandler'),
+	mongoHandller = new MongoHandler();
 
 const spotify_endpoints = {
 	top_tracks: 'https://api.spotify.com/v1/me/top/tracks',
@@ -25,7 +27,20 @@ SpotifyController.tracks_api = (req, res) => {
 			},
 		})
 		.then(result => {
-			rclient.setex('top_tracks/' + middleware.get_current_user(req), 600, JSON.stringify(result.data));
+			const curr_user_id = middleware.get_current_user(req); //TODO: fix 
+			console.log("user id: " + curr_user_id);
+			rclient.setex(`top_tracks/${curr_user_id}`, 600, JSON.stringify(result.data));
+			var track_ids = [];
+			result.data['items'].forEach(element => {
+				track_ids.push(element['id']);
+			});
+			console.log(track_ids);
+			mongoHandller.UserMapping.findOneAndUpdate( {spotify_id: curr_user_id}, {$set: {top_tracks: track_ids}}, {new: true, useFindAndModify: false}, (err, doc) => {
+				if (err) {
+					console.log("Error when updating user top tracks!");
+				}
+			});
+
 			return res.send(result.data);
 		})
 		.catch(err => {
@@ -59,9 +74,21 @@ SpotifyController.artists_api = (req, res) => {
 			},
 		})
 		.then(result => {
-			rclient.setex('top_artists/' + middleware.get_current_user(req), 300, JSON.stringify(result.data));
-			return res.send(result.data);
-		})
+			const curr_user_id = middleware.get_current_user(req);
+			rclient.setex(`top_artists/${curr_user_id}`, 600, JSON.stringify(result.data));
+			var artist_ids = [];
+			result.data['items'].forEach(element => {
+				artist_ids.push(element['id']);
+			});
+			console.log(artist_ids);
+			mongoHandller.UserMapping.findOneAndUpdate( {spotify_id: curr_user_id}, {$set: {top_artists: artist_ids}}, {new: true}, (err, doc) => {
+				if (err) {
+					console.log("Error when updating user top artists!");
+				}
+			});
+			return res.json(result.data);
+		}
+		)
 		.catch(err => {
 			console.log(err);
 			return res.status(500).send({ err });

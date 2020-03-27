@@ -18,6 +18,8 @@ const UserSchema = new mongoose.Schema(
 			unique: true,
 		},
 		display_name: { type: String, default: 'N/A' },
+		top_tracks: [{type: String, unique: true}],
+		top_artists: [{type: String, unique: true}]
 	},
 	{ timestamps: true, collection: 'User' }
 );

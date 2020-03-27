@@ -9,7 +9,7 @@ class Middleware {
         });
     }
 
-    get_current_user = (req) => {
+    get_current_user = (req) => { //FIXME: this function doesn't actually work?
         if (req == null)
             return null;
         console.log(req.headers['access']);
