@@ -19,7 +19,8 @@ const UserSchema = new mongoose.Schema(
 		},
 		display_name: { type: String, default: 'N/A' },
 		top_tracks: [{type: String, unique: true}],
-		top_artists: [{type: String, unique: true}]
+		top_artists: [{type: String, unique: true}],
+		friends: [{ type: Schema.Types.ObjectId, ref: 'Friend'}]
 	},
 	{ timestamps: true, collection: 'User' }
 );

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const User = require('../schemas/user');
 const Follow = require('../schemas/follow');
 const Post = require('../schemas/post');
+const Friend = require('../schemas/friend');
 
 class MongoHandler {
 	constructor() {
@@ -11,7 +12,8 @@ class MongoHandler {
 		});
 		this.UserMapping = this.client.model('Users', User);
 		this.FollowMapping = this.client.model('Follows', Follow);
-		this.PostMapping = this.client.model('Posts', Post);
+    this.PostMapping = this.client.model('Posts', Post);
+    this.FriendMapping = this.client.model('Friends', Friend);
 	}
 
 	close() {
@@ -32,6 +34,9 @@ class MongoHandler {
 		);
 	}
 
+  /*
+    @deprecated method after switching back to friends  
+  */
 	async followUser(follower, leader) {
     var followingMapping = this.FollowMapping;
 		followingMapping.find({ follow_spotify_id: follower, leader_spotify_id: leader }, function(err, docs) {
@@ -51,6 +56,9 @@ class MongoHandler {
 		});
 	}
 
+  /*
+    @deprecated method after switching back to friends  
+  */
 	async unfollowUser(follower, leader) {
 		this.FollowMapping.findOneAndDelete(
 			{
@@ -61,7 +69,82 @@ class MongoHandler {
 				if (err) console.log(err);
 			}
 		);
-	}
+  }
+  
+  async makeFriendRequest(userA, userB) {
+    // Let's say we have two users UserA and UserB... So when UserA requestes UserB to be a friends at that time we make two documents so that UserA can see requested and UserB can see pending and at the same time we push the _id of these documents in user's friends
+    const docA = await this.FriendMapping.findOneAndUpdate(
+      { requester: userA, recipient: userB },
+      { $set: { status: 1 } },
+      { upsert: true, new: true }
+    );
+    const docB = await this.FriendMapping.findOneAndUpdate(
+      { recipient: userA, requester: userB },
+      { $set: { status: 2 } },
+      { upsert: true, new: true }
+    );
+    const updateUserA = await this.UserMapping.findOneAndUpdate(
+      { spotify_id: userA },
+      { $push: { friends: docA._id } }
+    );
+    const updateUserB = await this.UserMapping.findOneAndUpdate(
+      { spotify_id: userB },
+      { $push: { friends: docB._id } }
+    );
+  }
+
+  async acceptFriendRequest(userA, userB) {
+    // If recipient accepts the friend request
+    this.FriendMapping.findOneAndUpdate(
+      { requester: userA, recipient: userB },
+      { $set: { status: 3 } }
+    );
+    this.FriendMapping.findOneAndUpdate(
+      { recipient: userA, requester: userB },
+      { $set: { status: 3 } }
+    );
+  }
+
+  async rejectFriendRequest(userA, userB) {
+    const docA = await this.FriendMapping.findOneAndRemove({
+      requester: userA,
+      recipient: userB
+    });
+    const docB = await this.FriendMapping.findOneAndRemove({
+      recipient: userA,
+      requester: userB
+    });
+    const updateUserA = await this.UserMapping.findOneAndUpdate(
+      { spotify_id: userA },
+      { $pull: { friends: docA._id } }
+    );
+    const updateUserB = await this.UserMapping.findOneAndUpdate(
+      { spotify_id: userB },
+      { $pull: { friends: docB._id } }
+    );
+  }
+
+  async getUserFriends(spotify_id) {
+    this.UserMapping.aggregate([
+      { "$lookup": {
+        "from": this.FriendMapping.collection.name,
+        "let": { "friends": "$friends" },
+        "pipeline": [
+          { "$match": {
+            "recipient": spotify_id,
+            "$expr": { "$in": [ "$spotify_id", "$$friends" ] }
+          }},
+          { "$project": { "status": 1 } }
+        ],
+        "as": "friends"
+      }},
+      { "$addFields": {
+        "friendsStatus": {
+          "$ifNull": [ { "$min": "$friends.status" }, 0 ]
+        }
+      }}
+    ])
+  }
 
 	async queryByIDPromise(id, id_owner) {
 		const simpy_users = this.client.collection('User');

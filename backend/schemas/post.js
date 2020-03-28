@@ -24,7 +24,7 @@ const PostSchema = new Schema(
 	},
 	{
 		collection: 'Post',
-		timestamps: { type: Date, default: Date.now },
+		timestamps: true,
 	}
 );
 
