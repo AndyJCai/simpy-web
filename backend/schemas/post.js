@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const 
+	Mongoose = require('mongoose'),
+	Schema = Mongoose.Schema;
 
 // check this stackoverflow forum out:
 // https://stackoverflow.com/questions/1443960/how-to-implement-the-activity-stream-in-a-social-network

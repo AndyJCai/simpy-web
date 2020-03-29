@@ -1,8 +1,10 @@
-const mongoose = require('mongoose');
-const uuid = require('node-uuid');
-const mongo_type_email = require('mongoose-type-email');
+const 
+	Mongoose = require('mongoose'),
+	Schema = Mongoose.Schema,
+	uuid = require('node-uuid'),
+	mongo_type_email = require('mongoose-type-email');
 
-const UserSchema = new mongoose.Schema(
+const UserSchema = new Schema(
 	{
 		username: {
 			type: String,

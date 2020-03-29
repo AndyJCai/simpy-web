@@ -67,7 +67,9 @@ app.post("/follow", UserController.follow);
 
 app.post("/unfollow", UserController.unfollow);
 
-app.post("/friends/:user_id", UserController.getFriends);
+app.get("/friends/:user_id", UserController.getFriends);
+
+// app.get("/add_friend", UserController.)
 
 
 app.get(/\/*/, function(req, res) {

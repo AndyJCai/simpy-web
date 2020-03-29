@@ -186,24 +186,21 @@ UserController.getFollowings = (req, res) => {
 UserController.getFriends = (req, res) => {
   var user_spotify_id = req.params.user_id; // NOTE: user_id is the spotify id of the user
   var user_id; // NOTE: user_id is the Mongo ID of the user
-  mongoHandler.UserMapping.find({spotify_id: user_spotify_id})
-  .select({_id: 1})
-  .exec((err, result) => {
-    if (!err && result) {
-      user_id = result;
-    }
+  mongoHandler.UserMapping.find({spotify_id: user_spotify_id}, {_id: 1}, (err, result) => {
+    console.log("_id is: " + result);
   });
 
+  let result = mongoHandler.getUserFriends(user_id);
+  res.send({friends: result});
+  // mongoHandler.FriendMapping.find( {requester: user_id, status: 3})
+  // .select({recipient: 1})
+  // .exec((err, result) => {
+  //   if (!err && result) {
+  //     res.send({friends: result});
+  //   }
+  // })
 
-  mongoHandler.FriendMapping.find( {requester: user_id, status: 3})
-  .select({recipient: 1})
-  .exec((err, result) => {
-    if (!err && result) {
-      res.send({friends: result});
-    }
-  })
-
-	console.log(`Retrieved following - user ${userid}`);
+	console.log(`Retrieved following - user ${user_id}`);
 };
 
 UserController.common_tracks = (req, res) => {
