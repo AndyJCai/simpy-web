@@ -146,6 +146,22 @@ class MongoHandler {
     ])
   }
 
+  async get_mongoid_from_spotifyid(spotify_id) {
+    var mongo_id;
+    this.UserMapping.findOne({spotify_id: spotify_id}, {_id: 1}, async (err, result) => {
+      if (!err) {
+        mongo_id = result._id;
+        console.log(`mongo_id is ${mongo_id}`);
+        return mongo_id;
+      } else {
+        console.log(err);
+        return null;
+      }
+
+    });
+    
+  }
+
 	async queryByIDPromise(id, id_owner) {
 		const simpy_users = this.client.collection('User');
 		var asyncUsers = new Promise(function(resolve, reject) {

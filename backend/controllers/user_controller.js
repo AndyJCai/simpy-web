@@ -1,14 +1,17 @@
 const 
   request = require('request'),
 	querystring = require('querystring'),
-	config = require('../config/config.json'),
+  config = require('../config/config.json'),
+  mongoose = require('mongoose'),
+  schema = mongoose.Schema;
+
+var 
+  { rclient } = require('../middleware/redis_cache'),
 	{ MongoHandler } = require('../mongo/mongohandler'),
 	mongoHandler = new MongoHandler(),
 	client_id = config.client_id,
 	client_secret = config.client_secret,
 	redirect_uri = 'http://localhost:8888/callback';
-
-var { rclient } = require('../middleware/redis_cache');
 
 const spotify_endpoints = {
 	auth: 'https://accounts.spotify.com/authorize?',
@@ -184,28 +187,20 @@ UserController.getFollowings = (req, res) => {
 
 // return a JSON of all the users that the current user follows
 UserController.getFriends = (req, res) => {
-  var user_spotify_id = req.params.user_id; // NOTE: user_id is the spotify id of the user
-  var user_id; // NOTE: user_id is the Mongo ID of the user
-  mongoHandler.UserMapping.findOne({spotify_id: user_spotify_id}, {_id: 1}, async (err, result) => {
-    user_id = result._id;
-    console.log("user_id is: " + user_id);
-    let friends = mongoHandler.getUserFriends(user_id);
-    res.send({friends: friends});
-  });
-
-  
-  // mongoHandler.FriendMapping.find( {requester: user_id, status: 3})
-  // .select({recipient: 1})
-  // .exec((err, result) => {
-  //   if (!err && result) {
-  //     res.send({friends: result});
-  //   }
-  // })
-
+  var user_spotify_id = req.params.user_id; 
+  let friends = mongoHandler.getUserFriends(mongoHandler.get_mongoid_from_spotifyid(user_spotify_id));
+  res.send({friends: friends});
 };
 
 UserController.makeFriendRequest = (req, res) => {
-  
+  var requester_id = req.query.requester_id;
+  var recipient_id = req.query.recipient_id;
+  let requester_mongoid = await mongoHandler.get_mongoid_from_spotifyid(requester_id);
+  let recipient_mongoid = await mongoHandler.get_mongoid_from_spotifyid(recipient_id);
+  console.log(requester_mongoid);
+  console.log(recipient_mongoid);
+  await mongoHandler.makeFriendRequest(requester_mongoid, recipient_mongoid);
+  res.send(`user ${requester_id} made a friend request to ${recipient_id}`)
 }
 
 UserController.common_tracks = (req, res) => {
