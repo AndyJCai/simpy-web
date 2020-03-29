@@ -27,7 +27,7 @@ SpotifyController.tracks_api = (req, res) => {
 			},
 		})
 		.then(result => {
-			const curr_user_id = middleware.get_current_user(req); //TODO: fix 
+			const curr_user_id = middleware.get_current_user_spotify(req); //TODO: fix 
 			console.log("user id: " + curr_user_id);
 			rclient.setex(`top_tracks/${curr_user_id}`, 600, JSON.stringify(result.data));
 			var track_ids = [];
@@ -51,10 +51,10 @@ SpotifyController.tracks_api = (req, res) => {
 
 // uses whichever redis and Spotify API is available
 SpotifyController.tracks = (req, res) => {
-	rclient.exists('top_tracks/' + middleware.get_current_user(req), (err, reply) => {
+	rclient.exists('top_tracks/' + middleware.get_current_user_spotify(req), (err, reply) => {
 		if (reply == 1) {
 			console.log('Retrieved top tracks from redis cache.');
-			rclient.get('top_tracks/' + middleware.get_current_user(req), (err, result) => {
+			rclient.get('top_tracks/' + middleware.get_current_user_spotify(req), (err, result) => {
 				res.send({ result });
 			});
 		} else {
@@ -74,7 +74,7 @@ SpotifyController.artists_api = (req, res) => {
 			},
 		})
 		.then(result => {
-			const curr_user_id = middleware.get_current_user(req);
+			const curr_user_id = middleware.get_current_user_spotify(req);
 			rclient.setex(`top_artists/${curr_user_id}`, 600, JSON.stringify(result.data));
 			var artist_ids = [];
 			result.data['items'].forEach(element => {
@@ -96,10 +96,10 @@ SpotifyController.artists_api = (req, res) => {
 };
 
 SpotifyController.artists = (req, res) => {
-	rclient.exists('top_artists/' + middleware.get_current_user(req), (err, reply) => {
+	rclient.exists('top_artists/' + middleware.get_current_user_spotify(req), (err, reply) => {
 		if (reply == 1) {
 			console.log('Retrieved top artists from redis cache.');
-			rclient.get('top_artists/' + middleware.get_current_user(req), (err, result) => {
+			rclient.get('top_artists/' + middleware.get_current_user_spotify(req), (err, result) => {
 				res.send({ result });
 			});
 		} else {

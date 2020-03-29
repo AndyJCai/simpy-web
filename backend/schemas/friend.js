@@ -1,8 +1,10 @@
-const mongoose = require('mongoose');
+const 
+    mongoose = require('mongoose'),
+    Schema = mongoose.Schema;
 
 const FriendSchema = new mongoose.Schema({
-    requester: { type: String, required: true },
-    recipient: { type: String, required: true },
+    requester: { type: Schema.Types.ObjectId, ref: 'User',required: true },
+    recipient: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     status: {
       type: Number,
       enums: [

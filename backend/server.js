@@ -67,6 +67,8 @@ app.post("/follow", UserController.follow);
 
 app.post("/unfollow", UserController.unfollow);
 
+app.post("/friends/:user_id", UserController.getFriends);
+
 
 app.get(/\/*/, function(req, res) {
   res.sendFile(path.join(__dirname + "/../frontend/build/"), "index.html");

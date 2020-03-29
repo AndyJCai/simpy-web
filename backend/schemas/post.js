@@ -11,16 +11,16 @@ const PostSchema = new Schema(
 		activity_type: {
 			type: Number,
 			required: true,
-			default: 0,
-			/*
-			1 - vibe check songs aka. compare top tracks between users: null
-			2 - vibe check artists - source: null
-			3 - system recommend song - source: track_id 
-			4 - user recommend (send) song - source: track_id
-		*/
+			enum: [
+				0, // 0 - vibe check songs aka. compare top tracks between users: null
+				1, // 1 - vibe check artists - source: null
+				2, // 2 - system recommend song - source: track_id 
+				3 // 3 - user recommend (send) song - source: track_id
+			]
 		},
 		source_id: { type: String }, // the record that the activity is related to, refer to above
 		created_time: { type: Date, default: Date.now, required: true },
+		liked_users: [{type: Schema.Types.ObjectId, ref: 'User'}]
 	},
 	{
 		collection: 'Post',

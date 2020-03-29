@@ -84,11 +84,11 @@ class MongoHandler {
       { upsert: true, new: true }
     );
     const updateUserA = await this.UserMapping.findOneAndUpdate(
-      { spotify_id: userA },
+      { _id: userA },
       { $push: { friends: docA._id } }
     );
     const updateUserB = await this.UserMapping.findOneAndUpdate(
-      { spotify_id: userB },
+      { _id: userB },
       { $push: { friends: docB._id } }
     );
   }
@@ -115,23 +115,23 @@ class MongoHandler {
       requester: userB
     });
     const updateUserA = await this.UserMapping.findOneAndUpdate(
-      { spotify_id: userA },
+      { _id: userA },
       { $pull: { friends: docA._id } }
     );
     const updateUserB = await this.UserMapping.findOneAndUpdate(
-      { spotify_id: userB },
+      { _id: userB },
       { $pull: { friends: docB._id } }
     );
   }
 
-  async getUserFriends(spotify_id) {
+  async getUserFriends(_id) {
     this.UserMapping.aggregate([
       { "$lookup": {
         "from": this.FriendMapping.collection.name,
         "let": { "friends": "$friends" },
         "pipeline": [
           { "$match": {
-            "recipient": spotify_id,
+            "recipient": mongoose.Schema.Types.ObjectId(_id),
             "$expr": { "$in": [ "$spotify_id", "$$friends" ] }
           }},
           { "$project": { "status": 1 } }

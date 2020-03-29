@@ -9,7 +9,7 @@ class Middleware {
         });
     }
 
-    get_current_user = (req) => { //FIXME: this function doesn't actually work?
+    get_current_user_spotify = (req) => { //FIXME: this function doesn't actually work?
         if (req == null)
             return null;
         return req.headers['access'].split("Bearer ")[1];
