@@ -69,6 +69,8 @@ app.post("/unfollow", UserController.unfollow);
 
 app.get("/friends/:user_id", UserController.getFriends);
 
+app.post("/friends/add", )
+
 // app.get("/add_friend", UserController.)
 
 
