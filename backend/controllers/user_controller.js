@@ -192,14 +192,14 @@ UserController.getFriends = (req, res) => {
   res.send({friends: friends});
 };
 
-UserController.makeFriendRequest = (req, res) => {
+UserController.makeFriendRequest = async(req, res) => {
   var requester_id = req.query.requester_id;
   var recipient_id = req.query.recipient_id;
-  let requester_mongoid = mongoHandler.get_mongoid_from_spotifyid(requester_id);
-  let recipient_mongoid = mongoHandler.get_mongoid_from_spotifyid(recipient_id);
+  let requester_mongoid = await mongoHandler.get_mongoid_from_spotifyid(requester_id);
+  let recipient_mongoid = await mongoHandler.get_mongoid_from_spotifyid(recipient_id);
   console.log(requester_mongoid);
   console.log(recipient_mongoid);
-  mongoHandler.makeFriendRequest(requester_mongoid, recipient_mongoid);
+  mongoHandler.makeFriendRequest(/*Schema.Types.ObjectId(*/requester_mongoid/*)*/, /*Schema.Types.ObjectId(*/recipient_mongoid/*)*/);
   res.send(`user ${requester_id} made a friend request to ${recipient_id}`)
 }
 

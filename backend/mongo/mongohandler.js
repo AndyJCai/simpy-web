@@ -148,18 +148,11 @@ class MongoHandler {
 
   async get_mongoid_from_spotifyid(spotify_id) {
     var mongo_id;
-    this.UserMapping.findOne({spotify_id: spotify_id}, {_id: 1}, async (err, result) => {
-      if (!err) {
-        mongo_id = result._id;
-        console.log(`mongo_id is ${mongo_id}`);
-        return mongo_id;
-      } else {
-        console.log(err);
-        return null;
-      }
-
-    });
-    
+    let result = await this.UserMapping.findOne({spotify_id: spotify_id}, {_id: 1});
+    if(!result) {
+      return null;
+    }
+    return result._id;
   }
 
 	async queryByIDPromise(id, id_owner) {
