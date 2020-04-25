@@ -53,8 +53,12 @@ app.get("/auth/following/:user_id", UserController.getFollowings);
 
 app.get("/auth/followers/:user_id", UserController.getFollowers);
 
+app.post("/auth/top/tracks", SpotifyController.tracks);
+
+app.post("/auth/top/artists", SpotifyController.artists);
+
 // testing functions 
-app.get("/top/tracks", SpotifyController.tracks_api);
+app.get("/top/tracks", SpotifyController.tracks);
 
 app.get("/top/artists", SpotifyController.artists_api);
 
