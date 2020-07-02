@@ -42,7 +42,7 @@ var UserController = {};
 UserController.login = (req, res) => {
 	const state = generateRandomString(16);
 	res.cookie(stateKey, state);
-	res.redirect(spotifyApi.createAuthorizeURL(scopes, state));
+	res.redirect(spotifyApi.createAuthorizeURL(scopes, state, true));
 };
 
 UserController.callback = (req, res) => {

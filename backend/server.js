@@ -11,10 +11,6 @@ const
   SpotifyController = require('./controllers/SpotifyController'),
   MongoHandler = require('./mongo/mongohandler');
 
-const 
-  {Middleware} = require('./util'),
-  middleware = new Middleware();
-
 const PORT = process.env.PORT || 8888;
 
 const app = express();
@@ -26,7 +22,6 @@ app
   .use(express.urlencoded())
   .use(express.json());
 
-middleware.verify(app);
 
 app.get("/login", UserController.login);
 
