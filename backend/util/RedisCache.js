@@ -1,8 +1,8 @@
 // static instance for redis cache
 var
     redis = require('redis'),
-    port_redis = process.env.PORT || 6379,
-    rclient = redis.createClient(port_redis);
+    PORT_REDIS = process.env.PORT || 6379,
+    rclient = redis.createClient(PORT_REDIS);
 
 rclient.on('connect', function (err, response) {
     'use strict';
