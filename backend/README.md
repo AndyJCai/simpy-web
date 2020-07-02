@@ -11,6 +11,9 @@ Then, run `mongo` to initialize your local database, and `mongod` to open comman
 should be installed at directory `/data/db`
 
 In addition, you can download Mongo Compass to visualize and manage the data more easily.
+Link is [here](https://www.mongodb.com/try/download/compass)
+
+More on how to set up MongoDB locally: [Mongo Setup Guide](https://zellwk.com/blog/local-mongodb/)
 
 ### Starting the Server
 We're almost there! Finally, start the server with `npm start` and the server will start on `http://localhost:8888`.
