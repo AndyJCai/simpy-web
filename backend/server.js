@@ -7,12 +7,12 @@ const
   path = require("path");
 
 const 
-  UserController = require('./controllers/user_controller'),
-  SpotifyController = require('./controllers/spotify_controller'),
+  UserController = require('./controllers/UserController'),
+  SpotifyController = require('./controllers/SpotifyController'),
   MongoHandler = require('./mongo/mongohandler');
 
 const 
-  {Middleware} = require('./middleware/auth'),
+  {Middleware} = require('./util'),
   middleware = new Middleware();
 
 const PORT = process.env.PORT || 8888;
@@ -30,46 +30,17 @@ middleware.verify(app);
 
 app.get("/login", UserController.login);
 
-// app.get('/logout', (req, res) => {
-//     res.clearCookie();
-//     res.sendStatus(200);
-// });
-
 app.get("/callback", UserController.callback);
 
-app.get("/refresh_token", UserController.refresh);
+app.get("/top/artists", SpotifyController.artists);
 
-app.get("/auth/top/artists", SpotifyController.artists);
+app.get("/top/tracks", SpotifyController.tracks_api);
 
-app.get("/auth/top/tracks", SpotifyController.tracks_api);
+app.post("/top/common_tracks", UserController.common_tracks);
 
-app.post("/auth/top/common_tracks", UserController.common_tracks);
+app.post("/top/tracks", SpotifyController.tracks);
 
-app.post("/auth/follow", UserController.follow);
-
-app.post("/auth/unfollow", UserController.unfollow);
-
-app.get("/auth/following/:user_id", UserController.getFollowings);
-
-app.get("/auth/followers/:user_id", UserController.getFollowers);
-
-app.post("/auth/top/tracks", SpotifyController.tracks);
-
-app.post("/auth/top/artists", SpotifyController.artists);
-
-// testing functions 
-app.get("/top/tracks", SpotifyController.tracks);
-
-app.get("/top/artists", SpotifyController.artists_api);
-
-
-app.get("/following/:user_id", UserController.getFollowings);
-
-app.get("/followers/:user_id", UserController.getFollowers);
-
-app.post("/follow", UserController.follow);
-
-app.post("/unfollow", UserController.unfollow);
+app.post("/top/artists", SpotifyController.artists);
 
 app.get("/friends/:user_id", UserController.getFriends);
 

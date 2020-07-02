@@ -2,26 +2,24 @@ const request = require('request');
 const Spotify = require('spotify-web-api-node');
 const querystring = require('querystring');
 const config = require('../config/config.json');
-const mongoose = require('mongoose');
-const schema = mongoose.Schema;
 
-var { rclient } = require('../middleware/redis_cache');
+const { spotifyApi } = require('../util/spotifyApi');
+
 var { MongoHandler } = require('../mongo/mongohandler');
-const mongohandler = require('../mongo/mongohandler');
 var mongoHandler = new MongoHandler();
 
-const CLIENT_ID = process.env.CLIENT_ID || config.client_id;
-const CLIENT_SECRET = process.env.CLIENT_SECRET || config.client_id;
-const REDIRECT_URI = process.env.REDIRECT_URI || 'http://localhost:8888/callback';
+// const CLIENT_ID = process.env.CLIENT_ID || config.client_id;
+// const CLIENT_SECRET = process.env.CLIENT_SECRET || config.client_id;
+// const REDIRECT_URI = process.env.REDIRECT_URI || 'http://localhost:8888/callback';
 
 const scopes = ['user-read-private', 'user-read-email', 'user-top-read'];
 const stateKey = 'spotify_auth_state';
 
-const spotifyApi = new Spotify({
-	clientId: CLIENT_ID,
-	clientSecret: CLIENT_SECRET,
-	redirectUri: REDIRECT_URI
-  });
+// const spotifyApi = new Spotify({
+// 	clientId: CLIENT_ID,
+// 	clientSecret: CLIENT_SECRET,
+// 	redirectUri: REDIRECT_URI
+//   });
 
 const spotify_endpoints = {
 	auth: 'https://accounts.spotify.com/authorize?',
