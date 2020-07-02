@@ -1,11 +1,11 @@
 const axios = require('axios');
 const schedule = require('node-schedule');
 
-const { rclient } = require('../util/RedisCache');
+const { rclient } = require('../utils/RedisCache');
 const { MongoHandler } = require('../mongo/mongohandler');
 const mongoHandller = new MongoHandler();
 
-const { spotifyApi } = require('../util/spotifyApi');
+const { spotifyApi } = require('../utils/spotifyApi');
 
 const spotify_endpoints = {
 	top_tracks: 'https://api.spotify.com/v1/me/top/tracks',

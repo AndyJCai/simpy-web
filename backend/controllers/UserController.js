@@ -3,9 +3,10 @@ const Spotify = require('spotify-web-api-node');
 const querystring = require('querystring');
 const config = require('../config/config.json');
 
-const { spotifyApi } = require('../util/spotifyApi');
+const { spotifyApi } = require('../utils/spotifyApi');
 
 var { MongoHandler } = require('../mongo/mongohandler');
+const { access } = require('fs');
 var mongoHandler = new MongoHandler();
 
 // const CLIENT_ID = process.env.CLIENT_ID || config.client_id;
@@ -71,7 +72,8 @@ UserController.callback = async (req, res) => {
 			}).then( () => {
 				console.log(userId);
 				// we can also pass the userId to the browser to make requests from there
-				res.redirect(`/home/${userId}`);
+				// res.redirect(`/home/${userId}`);
+				res.status(200).json({ userId: userId, accessToken: access_token, refreshToken : refresh_token });
 			});
 		}).catch( err => {
 			res.redirect('/#/error/invalid token');
