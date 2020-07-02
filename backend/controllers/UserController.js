@@ -45,7 +45,7 @@ UserController.login = (req, res) => {
 	res.redirect(spotifyApi.createAuthorizeURL(scopes, state, true));
 };
 
-UserController.callback = (req, res) => {
+UserController.callback = async (req, res) => {
 	const {code, state} = req.query;
 	const storedState = req.cookies ? req.cookies[stateKey] : null;
 
@@ -63,14 +63,16 @@ UserController.callback = (req, res) => {
 			spotifyApi.setAccessToken(access_token);
 			spotifyApi.setRefreshToken(refresh_token);
 	  
+			var userId;
 			// use the access token to access the Spotify Web API
 			spotifyApi.getMe().then(({ body }) => {
 				mongoHandler.addNewUser(body);
-			  	console.log(body);
+				userId = body['id'];
+			}).then( () => {
+				console.log(userId);
+				// we can also pass the userId to the browser to make requests from there
+				res.redirect(`/home/${userId}`);
 			});
-	  
-			// we can also pass the token to the browser to make requests from there
-			res.redirect(`/#/user/${access_token}/${refresh_token}`);
 		}).catch( err => {
 			res.redirect('/#/error/invalid token');
 		});
