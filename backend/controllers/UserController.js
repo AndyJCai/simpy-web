@@ -9,22 +9,9 @@ var { MongoHandler } = require('../mongo/mongohandler');
 const { access } = require('fs');
 var mongoHandler = new MongoHandler();
 
-// const CLIENT_ID = process.env.CLIENT_ID || config.client_id;
-// const CLIENT_SECRET = process.env.CLIENT_SECRET || config.client_id;
-// const REDIRECT_URI = process.env.REDIRECT_URI || 'http://localhost:8888/callback';
-
 const scopes = ['user-read-private', 'user-read-email', 'user-top-read'];
 const stateKey = 'spotify_auth_state';
 
-// const spotifyApi = new Spotify({
-// 	clientId: CLIENT_ID,
-// 	clientSecret: CLIENT_SECRET,
-// 	redirectUri: REDIRECT_URI
-//   });
-
-const spotify_endpoints = {
-	auth: 'https://accounts.spotify.com/authorize?',
-};
 
 const generateRandomString = length => {
 	var text = '';
