@@ -2,7 +2,8 @@
 Backend repo for Simpy, Node.js 
 
 ## Start the server ###
-### Install and Start the database
+
+### Install and Start MongoDB
 Install MongoDB on your local machine using the following commands:
 `brew tap mongodb/brew`
 `brew install mongodb-community`
@@ -14,6 +15,12 @@ In addition, you can download Mongo Compass to visualize and manage the data mor
 Link is [here](https://www.mongodb.com/try/download/compass)
 
 More on how to set up MongoDB locally: [Mongo Setup Guide](https://zellwk.com/blog/local-mongodb/)
+
+### Install Redis Cache Server
+To install Redis with Homebrew, run the command below.
+`brew update`
+`brew install redis`
+`brew services start redis`
 
 ### Starting the Server
 We're almost there! Finally, start the server with `npm start` and the server will start on `http://localhost:8888`.
