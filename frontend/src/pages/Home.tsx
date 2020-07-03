@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import Sidebar from "../components/Sidebar";
+import NewsFeed from "../components/NewsFeed/NewsFeed";
 
 const Wrapper = styled("div")`
   display: flex;
@@ -63,7 +64,7 @@ export default class Home extends React.Component<{}, { onFeed: number }> {
                 Vibe Check
               </this.SecTitles>
               <this.SecTitles val={1} data-val={1} onClick={this.updateSec}>
-                News Feed
+                <NewsFeed />
               </this.SecTitles>
             </Sections>
           </MainPage>
