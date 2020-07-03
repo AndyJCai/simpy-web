@@ -1,4 +1,4 @@
-import { SIGN_IN, SIGN_OUT } from './types';
+import { SIGN_IN, SIGN_OUT, GET_NEWSFEED, GET_NEWSCARD, DELETE_NEWSCARD } from './types';
 import history from '../history';
 
 export const signIn = (userId) => {
@@ -12,4 +12,20 @@ export const signOut = () => {
   return {
     type: SIGN_OUT
   }
+}
+
+export const getNewsFeed = (userId) => async (dispatch) => {
+    // const response = await
+
+    dispatch({ type: GET_NEWSFEED, payload: response.data });
+};
+
+export const getNewsCard = (cardId) => async (dispatch) => {
+    // const response = await
+
+    dispatch({ type: GET_NEWSCARD, payload: response.data });
+};
+
+export const deleteNewsCard = (cardId) => async (dispatch) => {
+  dispatch({ type: DELETE_NEWSCARD, payload: cardId });
 }
