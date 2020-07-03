@@ -4,12 +4,15 @@ const
   cors = require("cors"),
   querystring = require("querystring"),
   cookieParser = require("cookie-parser"),
-  path = require("path");
+  path = require("path"),
+  jwt = require('jsonwebtoken');
 
 const 
   UserController = require('./controllers/UserController'),
   SpotifyController = require('./controllers/SpotifyController'),
   MongoHandler = require('./mongo/mongohandler');
+
+const { spotifyApi } = require('./utils/SpotifyApi');
 
 const PORT = process.env.PORT || 8888;
 
@@ -22,8 +25,30 @@ app
   .use(express.urlencoded())
   .use(express.json());
 
+const auth = (req, res, next) => {
+    try {
+      const token = req.headers.authorization.split(' ')[1];
+      const { userId } = req.query;
+
+      if (spotifyApi.getAccessToken() && spotifyApi.getAccessToken() !== token) {
+        throw 'Invalid Access Token!';
+      } else {
+        res.status(201).json({message: "YES SIRRRR GANG!"});
+        next();
+      }
+    } catch {
+      res.status(401).json({
+        error: 'Invalid request!'
+      });
+    }
+  };
+
 
 app.get("/login", UserController.login);
+
+app.get('/test', auth, (req, res) => {
+  console.log('Got through auth!');
+})
 
 app.get("/callback", UserController.callback);
 

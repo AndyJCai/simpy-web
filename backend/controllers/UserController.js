@@ -59,7 +59,8 @@ UserController.callback = async (req, res) => {
 				console.log(userId);
 				// we can also pass the userId to the browser to make requests from there
 				// res.redirect(`/home/${userId}`);
-				res.status(200).json({ userId: userId, accessToken: access_token, refreshToken: refresh_token });
+				console.log(access_token);
+				return res.status(200).json({ userId: userId, accessToken: access_token, refreshToken: refresh_token });
 			});
 		}).catch( err => {
 			res.redirect('/#/error/invalid token');
