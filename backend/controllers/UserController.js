@@ -12,7 +12,6 @@ var mongoHandler = new MongoHandler();
 const scopes = ['user-read-private', 'user-read-email', 'user-top-read'];
 const stateKey = 'spotify_auth_state';
 
-
 const generateRandomString = length => {
 	var text = '';
 	const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -60,13 +59,17 @@ UserController.callback = async (req, res) => {
 				console.log(userId);
 				// we can also pass the userId to the browser to make requests from there
 				// res.redirect(`/home/${userId}`);
-				res.status(200).json({ userId: userId, accessToken: access_token, refreshToken : refresh_token });
+				res.status(200).json({ userId: userId, accessToken: access_token, refreshToken: refresh_token });
 			});
 		}).catch( err => {
 			res.redirect('/#/error/invalid token');
 		});
 	}
 };
+
+UserController.refresh = (req, res) => {
+	//TODO: finish
+}
 
 UserController.follow = (req, res) => {
 	var follower = req.query.follower_id;
