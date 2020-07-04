@@ -8,7 +8,6 @@ const
   jwt = require('jsonwebtoken');
 
 const 
-  UserController = require('./controllers/UserController'),
   SpotifyController = require('./controllers/SpotifyController'),
   MongoHandler = require('./mongo/mongohandler');
 
@@ -23,48 +22,22 @@ app
   .use(cors())
   .use(cookieParser())
   .use(express.urlencoded())
-  .use(express.json());
+  .use(express.json())
+  .use(require('./controllers/UserController'));
 
-const auth = (req, res, next) => {
-    try {
-      const token = req.headers.authorization.split(' ')[1];
-      const { userId } = req.query;
+// app.get("/top/artists", SpotifyController.artists);
 
-      if (spotifyApi.getAccessToken() && spotifyApi.getAccessToken() !== token) {
-        throw 'Invalid Access Token!';
-      } else {
-        res.status(201).json({message: "YES SIRRRR GANG!"});
-        next();
-      }
-    } catch {
-      res.status(401).json({
-        error: 'Invalid request!'
-      });
-    }
-  };
+// app.get("/top/tracks", SpotifyController.tracks_api);
 
+// app.post("/top/common_tracks", UserController.common_tracks);
 
-app.get("/login", UserController.login);
+// app.post("/top/tracks", SpotifyController.tracks);
 
-app.get('/test', auth, (req, res) => {
-  console.log('Got through auth!');
-})
+// app.post("/top/artists", SpotifyController.artists);
 
-app.get("/callback", UserController.callback);
+// app.get("/friends/:user_id", UserController.getFriends);
 
-app.get("/top/artists", SpotifyController.artists);
-
-app.get("/top/tracks", SpotifyController.tracks_api);
-
-app.post("/top/common_tracks", UserController.common_tracks);
-
-app.post("/top/tracks", SpotifyController.tracks);
-
-app.post("/top/artists", SpotifyController.artists);
-
-app.get("/friends/:user_id", UserController.getFriends);
-
-app.post("/friends/add", UserController.makeFriendRequest);
+// app.post("/friends/add", UserController.makeFriendRequest);
 
 // app.get("/add_friend", UserController.)
 
