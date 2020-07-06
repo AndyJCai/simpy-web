@@ -146,7 +146,8 @@ class MongoHandler {
     ])
   }
 
-  async get_mongoid_from_spotifyid(spotify_id) {
+  // Given a spotify_id as input, and finds the mongoId of the user, return null if user nonexistent
+  async spotifyToMongoId(spotify_id) {
     var mongo_id;
     let result = await this.UserMapping.findOne({spotify_id: spotify_id}, {_id: 1});
     if(!result) {

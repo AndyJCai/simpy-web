@@ -5,7 +5,7 @@ const config = require('../config/config.json');
 
 const { spotifyApi } = require('../utils/spotifyApi');
 
-var auth = require('../middleware/auth').auth;
+var auth = require('../middleware/auth').auth2;
 var { MongoHandler } = require('../mongo/mongohandler');
 var mongoHandler = new MongoHandler();
 
@@ -13,6 +13,7 @@ const scopes = ['user-read-private', 'user-read-email', 'user-top-read'];
 const stateKey = 'spotify_auth_state';
 
 var express = require('express');
+const SpotifyWebApi = require('spotify-web-api-node');
 var router = express.Router();
 
 const generateRandomString = (length) => {
@@ -83,66 +84,58 @@ router.get('/refresh_token', (req, res) => {
 	});
 })
 
-router.get('/test', auth(spotifyApi), (req, res) => {
+router.get('/test/:user_id', auth, (req, res) => {
 	console.log('Got through auth!');
 })
 
-router.post('/friends/add', auth(spotifyApi), (req, res) => {
-	var follower = req.query.follower_id;
-	var leader = req.query.leader_id;
-
-	if (!follower) {
-		console.log('Undefined follower id!');
-		return;
-	}
-
-	if (!leader) {
-		console.log('Undefined leader id!');
-		return;
-	}
-
-	mongoHandler.followUser(follower, leader);
-	console.log('user ' + follower + ' followed ' + leader);
-}); 
 
 // return a JSON of all the users that the current user follows
-router.get('friends/:user_id', auth(spotifyApi), (req, res) => {
-	var user_spotify_id = req.params.user_id;
-	let friends = mongoHandler.getUserFriends(mongoHandler.get_mongoid_from_spotifyid(user_spotify_id));
+router.get('friends/:user_id', auth, (req, res) => {
+	var { user_id } = req.params;
+	let friends = mongoHandler.getUserFriends(mongoHandler.spotifyToMongoId(user_id));
 	res.send({ friends: friends });
 });
 
-router.get('friends/add', auth(spotifyApi), async (req, res) => {
-	var requester_id = req.query.requester_id;
+router.get('friends/:user_id/add', auth, async (req, res) => {
+	var requester_id = req.params.user_id;
 	var recipient_id = req.query.recipient_id;
-	let requester_mongoid = await mongoHandler.get_mongoid_from_spotifyid(requester_id);
-	let recipient_mongoid = await mongoHandler.get_mongoid_from_spotifyid(recipient_id);
+	let requester_mongoid = await mongoHandler.spotifyToMongoId(requester_id);
+	let recipient_mongoid = await mongoHandler.spotifyToMongoId(recipient_id);
 	mongoHandler.makeFriendRequest(requester_mongoid, recipient_mongoid);
 	res.send(`user ${requester_id} made a friend request to ${recipient_id}`);
 });
 
-router.get('friends/reject', auth(spotifyApi), async (req, res) => {
-	var requester_id = req.query.requester_id;
+router.get('friends/:user_id/reject', auth, async (req, res) => {
+	var requester_id = req.params.user_id;
 	var recipient_id = req.query.recipient_id;
-	let requester_mongoid = await mongoHandler.get_mongoid_from_spotifyid(requester_id);
-	let recipient_mongoid = await mongoHandler.get_mongoid_from_spotifyid(recipient_id);
+	let requester_mongoid = await mongoHandler.spotifyToMongoId(requester_id);
+	let recipient_mongoid = await mongoHandler.spotifyToMongoId(recipient_id);
 	mongoHandler.rejectFriendRequest(requester_mongoid, recipient_mongoid);
 	res.send(`user ${recipient_id} rejected a friend request from ${requester_id}`);
 });
 
-router.get('friends/accept', auth(spotifyApi), async (req, res) => {
-	var requester_id = req.query.requester_id;
+router.get('friends/:user_id/accept', auth, async (req, res) => {
+	var requester_id = req.params.user_id;
 	var recipient_id = req.query.recipient_id;
-	let requester_mongoid = await mongoHandler.get_mongoid_from_spotifyid(requester_id);
-	let recipient_mongoid = await mongoHandler.get_mongoid_from_spotifyid(recipient_id);
+	let requester_mongoid = await mongoHandler.spotifyToMongoId(requester_id);
+	let recipient_mongoid = await mongoHandler.spotifyToMongoId(recipient_id);
 	mongoHandler.acceptFriendRequest(requester_mongoid, recipient_mongoid);
 	res.send(`user ${recipient_id} accepted a friend request from ${requester_id}`);
 });
 
-router.get('top/common_tracks', auth(spotifyApi), common_tracks = (req, res) => {
-	var follower = req.query.follower_id;
-	var leader = req.query.leader_id;
+router.get('top/common_tracks/:user_id', auth, (req, res) => {
+	var follower = req.params.user_id;
+	var leader = req.query.recipient_id;
 	var num_common = req.query.num;
+	//TODO: finish
+});
+
+router.get('/top/artists/:user_id', auth, (req, res) => {
+	//TODO: finish
+});
+
+router.get('/top/tracks/:user_id', auth, (req, res) => {
+	//TODO: finish
 });
 
 module.exports = router;

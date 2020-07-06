@@ -20,8 +20,8 @@ const UserSchema = new Schema(
 			unique: true,
 		},
 		display_name: { type: String, default: 'N/A' },
-		top_spotify_tracks: [{type: String, unique: true}],
-		top_spotify_artists: [{type: String, unique: true}],
+		top_spotify_tracks: {type: Array, default: []},
+		top_spotify_artists: {type: Array, default: []},
 		friends: [{ type: Schema.Types.ObjectId, ref: 'Friend'}]
 	},
 	{ timestamps: true, collection: 'User' }
