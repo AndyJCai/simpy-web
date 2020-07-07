@@ -23,7 +23,8 @@ app
   .use(cookieParser())
   .use(express.urlencoded())
   .use(express.json())
-  .use(require('./controllers/UserController'));
+  .use(require('./controllers/UserController')); // UserController router
+  
 
 // app.get("/top/artists", SpotifyController.artists);
 

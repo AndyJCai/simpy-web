@@ -1,5 +1,6 @@
 const SpotifyWebApi = require("spotify-web-api-node");
 
+// Easy auth, not actually used 
 exports.auth = async (req, res, next) => {
         try {
             const token = req.headers.authorization.split(' ')[1];
@@ -17,6 +18,7 @@ exports.auth = async (req, res, next) => {
           }
         }
 
+// Actual auth method used in code 
 exports.auth2 = async (req, res, next) => {
   try {
     var userId = req.param.user_id;

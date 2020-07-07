@@ -1,27 +1,23 @@
-const axios = require('axios');
-const schedule = require('node-schedule');
-
 const { rclient } = require('../utils/RedisCache');
 const { MongoHandler } = require('../mongo/mongohandler');
 const mongoHandller = new MongoHandler();
 
-const { spotifyApi } = require('../utils/spotifyApi');
+const SpotifyWebApi = require('spotify-web-api-node');
 
-const spotify_endpoints = {
-	top_tracks: 'https://api.spotify.com/v1/me/top/tracks',
-	top_artists: 'https://api.spotify.com/v1/me/top/artists',
-};
+var router = require('express').Router();
+var auth = require('../middleware/auth').auth2;
 
 var SpotifyController = {};
 
 //get the tracks from the Spotify API
 // query - userId
-SpotifyController.tracks_api = (req, res) => {
-	var { userId } = req.query;
-	console.log('Retrieved top tracks from Spotify api.');
+router.get('/top/artists/:user_id', auth, (req, res) => {
+	var userId = req.params.user_id;
+	const token = req.headers.authorization.split(' ')[1];
+    var spotifyApi = new SpotifyWebApi();
+    spotifyApi.setAccessToken(token);
 	spotifyApi.getMyTopTracks()
 		.then(result => {
-			rclient.setex(`top_tracks/${userId}`, 600, result.json);
 			var track_ids = [];
 			result.data['items'].forEach(element => {
 				track_ids.push(element['id']);
@@ -39,30 +35,16 @@ SpotifyController.tracks_api = (req, res) => {
 			console.log(err);
 			return res.status(500).send({ err });
 		});
-};
-
-// uses whichever redis and Spotify API is available
-SpotifyController.tracks = (req, res) => {
-	var { userId } = req.query;
-	rclient.exists(`top_tracks/${userId}`, (err, reply) => {
-		if (reply == 1) {
-			console.log('Retrieved top tracks from redis cache.');
-			rclient.get(`top_tracks/${userId}`, (err, result) => {
-				res.send({ result });
-			});
-		} else {
-			SpotifyController.tracks_api(req, res);
-		}
-	});
-};
+});
 
 //get the tracks from the Spotify API
-SpotifyController.artists_api = (req, res) => {
-	var {userId} = req.query;
-	console.log('Retrieved top artists from Spotify api.');
+router.get('/top/artists/:user_id', auth, (req, res) => {
+	var userId = req.params.user_id;
+	const token = req.headers.authorization.split(' ')[1];
+	var spotifyApi = new SpotifyWebApi();
+	spotifyApi.setAccessToken(token);
 	spotifyApi.getMyTopArtists()
 		.then( result => {
-			rclient.setex(`top_artists/${userId}`, 600, result.json);
 			var artist_ids = [];
 			result.data['items'].forEach(element => {
 				artist_ids.push(element['id']);
@@ -79,9 +61,24 @@ SpotifyController.artists_api = (req, res) => {
 			console.log(err);
 			return res.status(500).send({ err });
 		});
+});
+
+// @deprecated 
+SpotifyController.tracks = (req, res) => {
+	var { userId } = req.query;
+	rclient.exists(`top_tracks/${userId}`, (err, reply) => {
+		if (reply == 1) {
+			console.log('Retrieved top tracks from redis cache.');
+			rclient.get(`top_tracks/${userId}`, (err, result) => {
+				res.send({ result });
+			});
+		} else {
+			SpotifyController.tracks_api(req, res);
+		}
+	});
 };
 
-
+// @deprecated 
 SpotifyController.artists = (req, res) => {
 	var { userId } = req.query;
 	rclient.exists(`top_artists/${userId}`, (err, reply) => {
@@ -96,8 +93,4 @@ SpotifyController.artists = (req, res) => {
 	});
 };
 
-// schedule server to refresh top tracks and artists for a user 
-schedule.scheduleJob('0 0 * * *', SpotifyController.tracks_api);
-schedule.scheduleJob('0 0 * * *', SpotifyController.artists_api);
-
-module.exports = SpotifyController;
+module.exports = router;

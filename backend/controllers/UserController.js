@@ -12,9 +12,8 @@ var mongoHandler = new MongoHandler();
 const scopes = ['user-read-private', 'user-read-email', 'user-top-read'];
 const stateKey = 'spotify_auth_state';
 
-var express = require('express');
+var router = require('express').Router();
 const SpotifyWebApi = require('spotify-web-api-node');
-var router = express.Router();
 
 const generateRandomString = (length) => {
 	var text = '';
@@ -26,8 +25,6 @@ const generateRandomString = (length) => {
 
 	return text;
 };
-
-var UserController = {}
 
 router.get('/login', (req, res) => {
 	const state = generateRandomString(16);
