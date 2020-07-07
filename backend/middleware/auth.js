@@ -21,7 +21,7 @@ exports.auth = async (req, res, next) => {
 // Actual auth method used in code 
 exports.auth2 = async (req, res, next) => {
   try {
-    var userId = req.param.user_id;
+    var userId = req.params.user_id;
     const token = req.headers.authorization.split(' ')[1];
     var spotifyApi = new SpotifyWebApi();
     spotifyApi.setAccessToken(token);
@@ -29,10 +29,11 @@ exports.auth2 = async (req, res, next) => {
       .getMe()
       .then(({body}) => {
         if (body['id'] == userId) {
-          res.status(201).json({message: "YES SIRRRR GANG!"});
           next();
         } else {
-          throw 'Access Token and userId do not match up!';
+          res.status(401).json({
+            error: 'Access Token and userId do not match up!'
+          })
         }
       })
 

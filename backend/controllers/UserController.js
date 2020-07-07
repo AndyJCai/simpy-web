@@ -120,19 +120,4 @@ router.get('friends/:user_id/accept', auth, async (req, res) => {
 	res.send(`user ${recipient_id} accepted a friend request from ${requester_id}`);
 });
 
-router.get('top/common_tracks/:user_id', auth, (req, res) => {
-	var follower = req.params.user_id;
-	var leader = req.query.recipient_id;
-	var num_common = req.query.num;
-	//TODO: finish
-});
-
-router.get('/top/artists/:user_id', auth, (req, res) => {
-	//TODO: finish
-});
-
-router.get('/top/tracks/:user_id', auth, (req, res) => {
-	//TODO: finish
-});
-
 module.exports = router;
