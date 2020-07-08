@@ -51,12 +51,14 @@ router.get('/callback', async (req, res) => {
 				spotifyApi.setRefreshToken(refresh_token);
 
 				var userId;
+				var userBody;
 				// use the access token to access the Spotify Web API
 				spotifyApi
 					.getMe()
 					.then(({ body }) => {
 						mongoHandler.addNewUser(body);
 						userId = body['id'];
+						userBody = body;
 					})
 					.then(() => {
 						console.log(userId);
@@ -65,7 +67,7 @@ router.get('/callback', async (req, res) => {
 						console.log(access_token);
 						return res
 							.status(200)
-							.json({ userId: userId, accessToken: access_token, refreshToken: refresh_token });
+							.json({ userId: userId, accessToken: access_token, refreshToken: refresh_token, body: userBody});
 					});
 			})
 			.catch((err) => {

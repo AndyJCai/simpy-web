@@ -118,3 +118,5 @@ dist
 config/
 
 *.rdb
+
+.env

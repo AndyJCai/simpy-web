@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const stagingUrl = "https://localhost:8888";
+export const apiUrl = process.env.NODE_ENV == 'production' ? 'placeholder' : 'http://localhost:8888';
 
 // GET function to get user's top artists
 export const getUserTopArtists = function() {
-  axios.get(stagingUrl + "/top/artists").then(res => {
+  axios.get(apiUrl + "/top/artists").then(res => {
     const data = res.data;
     console.log(data);
   });
@@ -12,7 +12,7 @@ export const getUserTopArtists = function() {
 
 // GET function to get user's top tracks
 export const getUserTopTracks = function() {
-  axios.get(stagingUrl + "/top/tracks").then(res => {
+  axios.get(apiUrl + "/top/tracks").then(res => {
     const data = res.data;
     console.log(data);
   });
