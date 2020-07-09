@@ -4,14 +4,7 @@ const
   cors = require("cors"),
   querystring = require("querystring"),
   cookieParser = require("cookie-parser"),
-  path = require("path"),
-  jwt = require('jsonwebtoken');
-
-const 
-  SpotifyController = require('./controllers/SpotifyController'),
-  MongoHandler = require('./mongo/mongohandler');
-
-const { spotifyApi } = require('./utils/SpotifyApi');
+  path = require("path");
 
 const PORT = process.env.PORT || 8888;
 

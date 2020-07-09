@@ -1,4 +1,3 @@
-const { rclient } = require('../utils/RedisCache');
 const { MongoHandler } = require('../mongo/mongohandler');
 const mongoHandller = new MongoHandler();
 
