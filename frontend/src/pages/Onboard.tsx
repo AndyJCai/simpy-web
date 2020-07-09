@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { RouteComponentProps } from "react-router-dom";
+import { apiUrl } from '../Api';
 
 const Wrapper = styled("div")`
   height: 100vh;
@@ -56,7 +57,7 @@ export default class Onboard extends React.Component<RouteComponentProps> {
   // refresh page for redirect to spotify
   refreshTool() {
     this.props.history.push({
-      pathname: "/login"
+      pathname: `${apiUrl}/login`
     });
     window.location.reload();
   }

@@ -11,7 +11,7 @@ const App = () => {
       <Router history={history}>
         <div>
           <Route exact path="/" component={Onboard} />
-          <Route path="/home/:id" component={Home} />
+          <Route path="/home/:user_id" component={Home} />
         </div>
       </Router>
     </div>
