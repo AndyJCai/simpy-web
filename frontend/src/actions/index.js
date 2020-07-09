@@ -17,13 +17,13 @@ export const signOut = () => {
 export const getNewsFeed = (userId) => async (dispatch) => {
     // const response = await
 
-    dispatch({ type: GET_NEWSFEED, payload: response.data });
+    dispatch({ type: GET_NEWSFEED, payload: "hi" });
 };
 
 export const getNewsCard = (cardId) => async (dispatch) => {
     // const response = await
 
-    dispatch({ type: GET_NEWSCARD, payload: response.data });
+    dispatch({ type: GET_NEWSCARD, payload: "hi" });
 };
 
 export const deleteNewsCard = (cardId) => async (dispatch) => {

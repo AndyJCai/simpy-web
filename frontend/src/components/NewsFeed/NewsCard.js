@@ -15,7 +15,7 @@ class NewsCard extends React.Component {
 
   renderSongs = () => {
     return this.props.newsCard.songs.map((song) => {
-      <div>{song.title}</div>
+      return <div>{song.title}</div>;
     });
   };
 
@@ -32,13 +32,13 @@ class NewsCard extends React.Component {
           </div>
         </div>
       );
-    ) else {
-      return (
-        <div>
-          <button onClick={this.toggleExpand()}>Expand</button>
-        </div>
-      )
     }
+    return (
+      <div>
+        <button onClick={this.toggleExpand()}>Expand</button>
+      </div>
+    )
+
   };
 
   render() {
