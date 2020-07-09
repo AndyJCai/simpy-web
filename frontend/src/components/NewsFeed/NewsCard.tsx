@@ -26,8 +26,10 @@ class NewsCard extends React.Component {
           <button onClick={this.toggleExpand()}>Close</button>
           {this.props.userId}
           {this.props.newsCard.userName}
-          <div>Songs</div>
-          {this.renderSongs()}
+          <div>
+            <div>Songs</div>
+            {this.renderSongs()}
+          </div>
         </div>
       );
     ) else {
