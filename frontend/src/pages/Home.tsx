@@ -29,6 +29,7 @@ export default class Home extends React.Component<{}, { onFeed: number }> {
   }
 
   componentWillMount() {
+
     this.setState({
       onFeed: 1
     });
