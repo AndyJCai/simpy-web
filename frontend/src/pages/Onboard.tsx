@@ -59,6 +59,9 @@ export default class Onboard extends React.Component<RouteComponentProps> {
     // this.props.history.push({
     //   pathname: `${apiUrl}/login`
     // })
+    //fetch("http://localhost:8888/login").then((res) => {
+    //  window.location.href = `http://localhost:3000/home/${res["userId"]}`;
+    //})
     window.location.href = "http://localhost:8888/login";
   }
 

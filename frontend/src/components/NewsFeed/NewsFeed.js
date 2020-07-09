@@ -11,7 +11,7 @@ class NewsFeed extends React.Component {
   renderNewsFeedCards = () => {
     return this.props.newsFeed.map((entry) => {
       return (
-        <div>
+        <div key={entry.userName}>
 
           <h4>{entry.name}</h4>
           <div>{entry.userName}</div>
@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
           userName: "lorneez"
         }
       ]
-    
+
   };
 };
 
