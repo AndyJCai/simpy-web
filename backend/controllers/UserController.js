@@ -29,7 +29,7 @@ const generateRandomString = (length) => {
 router.get('/login', (req, res) => {
 	const state = generateRandomString(16);
 	res.cookie(stateKey, state);
-	res.redirect(spotifyApi.createAuthorizeURL(scopes, state, true));
+	res.redirect(spotifyApi.createAuthorizeURL(scopes, state));
 });
 
 router.get('/callback', async (req, res) => {
@@ -56,18 +56,25 @@ router.get('/callback', async (req, res) => {
 				spotifyApi
 					.getMe()
 					.then(({ body }) => {
-						mongoHandler.addNewUser(body);
-						userId = body['id'];
-						userBody = body;
+						if(!mongoHandler.findUser(body)){
+							mongoHandler.addNewUser(body);
+							userId = body['id'];
+							userBody = body;
+						}
+						else{
+							userId = body['id'];
+							userBody = body;
+						}
 					})
 					.then(() => {
-						console.log(userId);
+						res.redirect(`/home/${userId}`);
+
+						//console.log(userId);
 						// we can also pass the userId to the browser to make requests from there
-						// res.redirect(`/home/${userId}`);
-						console.log(access_token);
-						return res
-							.status(200)
-							.json({ userId: userId, accessToken: access_token, refreshToken: refresh_token, body: userBody});
+						//console.log(access_token);
+						//return res
+						//	.status(200)
+						//	.json({ userId: userId, accessToken: access_token, refreshToken: refresh_token, body: userBody});
 					});
 			})
 			.catch((err) => {
