@@ -11,11 +11,11 @@ class NewsFeed extends React.Component {
   renderNewsFeedCards = () => {
     return this.props.newsFeed.map((entry) => {
       return (
-        <div>
-          <img src={entry.imageUrl} />
+        <div key={entry.userName}>
+
           <h4>{entry.name}</h4>
           <div>{entry.userName}</div>
-          <NewsCard cardId={entry.cardId}/>
+
         </div>
       )
     })
@@ -34,7 +34,14 @@ class NewsFeed extends React.Component {
 const mapStateToProps = (state) => {
   return {
     userId: state.auth.userId,
-    newsFeed: state.newsFeed,
+    newsFeed:
+      [
+        {
+          name: "lorne",
+          userName: "lorneez"
+        }
+      ]
+
   };
 };
 

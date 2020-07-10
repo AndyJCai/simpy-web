@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import axios from 'axios';
+import { signIn } from '../actions';
+import { connect } from 'react-redux';
 
 import Sidebar from "../components/Sidebar";
 import NewsFeed from "../components/NewsFeed/NewsFeed";
@@ -22,10 +25,17 @@ const Sections = styled("div")`
   flex-direction: row-reverse;
 `;
 
-export default class Home extends React.Component<{}, { onFeed: number }> {
+class Home extends React.Component<{}, { onFeed: number }> {
   constructor(props) {
     super(props);
     this.updateSec = this.updateSec.bind(this);
+  }
+
+  componentDidMount() {
+    axios.get(`http://localhost:8888//user_spotify_data/lorneez`)
+      .then((res) => {
+        console.log(res);
+      })
   }
 
   componentWillMount() {
@@ -34,7 +44,7 @@ export default class Home extends React.Component<{}, { onFeed: number }> {
     });
   }
 
-  SecTitles = styled("p")`
+  SecTitles = styled("div")`
     color: ${props =>
       this.state.onFeed == props.val ? "var(--primary-white)" : "#676767"};
     font-size: 64px;
@@ -73,3 +83,5 @@ export default class Home extends React.Component<{}, { onFeed: number }> {
     );
   }
 }
+
+export default connect(null, { signIn })(Home);

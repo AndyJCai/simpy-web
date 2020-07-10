@@ -55,11 +55,14 @@ const SpotifyButton = styled("div")`
 
 export default class Onboard extends React.Component<RouteComponentProps> {
   // refresh page for redirect to spotify
-  refreshTool() {
-    this.props.history.push({
-      pathname: `${apiUrl}/login`
-    });
-    window.location.reload();
+  spotifyLogin() {
+    // this.props.history.push({
+    //   pathname: `${apiUrl}/login`
+    // })
+    //fetch("http://localhost:8888/login").then((res) => {
+    //  window.location.href = `http://localhost:3000/home/${res["userId"]}`;
+    //})
+    window.location.href = "http://localhost:8888/login";
   }
 
   render() {
@@ -71,7 +74,7 @@ export default class Onboard extends React.Component<RouteComponentProps> {
             <p style={{ width: "70%" }}>
               Discover what your friends are listening to.
             </p>
-            <SpotifyButton onClick={this.refreshTool.bind(this)}>
+            <SpotifyButton onClick={this.spotifyLogin.bind(this)}>
               Sign up with Spotify
             </SpotifyButton>
           </Content>

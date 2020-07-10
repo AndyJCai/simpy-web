@@ -21,6 +21,17 @@ class MongoHandler {
 		return;
 	}
 
+	async findUser(user) {
+		return this.UserMapping.findOne({
+			spotify_id: user.id,
+			email: user.email,
+			display_name: user.display_name
+		}, (err, result) => {
+			if(err) return null;
+			return result;
+		})
+	}
+
 	async addNewUser(newUser) {
 		this.UserMapping.create(
 			{
@@ -36,7 +47,7 @@ class MongoHandler {
 	}
 
   /*
-    @deprecated method after switching back to friends  
+    @deprecated method after switching back to friends
   */
 	async followUser(follower, leader) {
     var followingMapping = this.FollowMapping;
@@ -58,7 +69,7 @@ class MongoHandler {
 	}
 
   /*
-    @deprecated method after switching back to friends  
+    @deprecated method after switching back to friends
   */
 	async unfollowUser(follower, leader) {
 		this.FollowMapping.findOneAndDelete(
@@ -71,7 +82,7 @@ class MongoHandler {
 			}
 		);
   }
-  
+
   async makeFriendRequest(userA, userB) {
     // Let's say we have two users UserA and UserB... So when UserA requestes UserB to be a friends at that time we make two documents so that UserA can see requested and UserB can see pending and at the same time we push the _id of these documents in user's friends
     const docA = await this.FriendMapping.findOneAndUpdate(
