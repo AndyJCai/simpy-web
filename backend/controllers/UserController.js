@@ -1,5 +1,4 @@
 const request = require('request');
-const Spotify = require('spotify-web-api-node');
 const querystring = require('querystring');
 const config = require('../config/config.json');
 
@@ -29,7 +28,7 @@ const generateRandomString = (length) => {
 router.get('/login', (req, res) => {
 	const state = generateRandomString(16);
 	res.cookie(stateKey, state);
-	res.redirect(spotifyApi.createAuthorizeURL(scopes, state));
+	res.redirect(spotifyApi.createAuthorizeURL(scopes, state, true));
 });
 
 router.get('/callback', async (req, res) => {
@@ -56,28 +55,22 @@ router.get('/callback', async (req, res) => {
 				spotifyApi
 					.getMe()
 					.then(({ body }) => {
-						if(!mongoHandler.findUser(body)){
-							mongoHandler.addNewUser(body);
-							userId = body['id'];
-							userBody = body;
-						}
-						else{
-							userId = body['id'];
-							userBody = body;
-						}
+						mongoHandler.addNewUser(body);
+						userId = body['id'];
+						userBody = body;
 					})
 					.then(() => {
 
 						//res.redirect(`/home/${userId}`);
 						//window.location.href = `http://localhost:3000/home/${userId}`;
-						res.status(301).redirect(`http://localhost:3000/home/${userId}`)
+						// res.status(301).redirect(`http://localhost:3000/home/${userId}`)
 						//return res.status(200).json({ userId: userId });
 						//console.log(userId);
 						// we can also pass the userId to the browser to make requests from there
 						//console.log(access_token);
-						//return res
-						//	.status(200)
-						//	.json({ userId: userId, accessToken: access_token, refreshToken: refresh_token, body: userBody});
+						return res
+							.status(301)
+							.json({ userId: userId, accessToken: access_token, refreshToken: refresh_token, body: userBody});
 					});
 			})
 			.catch((err) => {
