@@ -26,7 +26,8 @@ class MongoHandler {
 			{
 				spotify_id: newUser.id,
 				email: newUser.email,
-				display_name: newUser.display_name,
+        display_name: newUser.display_name,
+        profile_pic:  newUser.images
 			},
 			function(err, small) {
 				if (err) console.log(err);
