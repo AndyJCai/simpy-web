@@ -67,8 +67,11 @@ router.get('/callback', async (req, res) => {
 						}
 					})
 					.then(() => {
-						res.redirect(`/home/${userId}`);
 
+						//res.redirect(`/home/${userId}`);
+						//window.location.href = `http://localhost:3000/home/${userId}`;
+						res.status(301).redirect(`http://localhost:3000/home/${userId}`)
+						//return res.status(200).json({ userId: userId });
 						//console.log(userId);
 						// we can also pass the userId to the browser to make requests from there
 						//console.log(access_token);
@@ -81,6 +84,11 @@ router.get('/callback', async (req, res) => {
 				res.redirect('/#/error/invalid token');
 			});
 	}
+});
+
+router.get('/user_spotify_data/:user_id', (req, res) => {
+	var { user_id } = req.params;
+	return res.status(200).json({ userData: mongoHandler.findUser(user_id) });
 });
 
 router.get('/refresh_token', (req, res) => {

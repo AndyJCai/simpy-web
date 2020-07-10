@@ -22,12 +22,14 @@ class MongoHandler {
 	}
 
 	async findUser(user) {
-		const found = this.UserMapping.findOne({
+		return this.UserMapping.findOne({
 			spotify_id: user.id,
 			email: user.email,
 			display_name: user.display_name
-		}).count();
-		return found == 1 ? true : false;
+		}, (err, result) => {
+			if(err) return null;
+			return result;
+		})
 	}
 
 	async addNewUser(newUser) {
