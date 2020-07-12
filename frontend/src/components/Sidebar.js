@@ -132,7 +132,7 @@ class Sidebar extends React.Component {
       <>
         <Wrapper>
           <Prof>
-            <ProfilePic src="" />
+            {this.props.profilePic.length > 0 ? <ProfilePic src={this.props.profilePic[0]} /> :  <ProfilePic src="" />}
             <Name>{this.props.displayName}</Name>
             <Handle>@{this.props.spotifyId}</Handle>
             <Friends>{this.props.friends} Friends</Friends>
@@ -151,7 +151,8 @@ const mapStateToProps = (state) => {
   return ({
     displayName: state.spotify.displayName,
     spotifyId: state.spotify.spotifyId,
-    friends: state.spotify.friends.length
+    friends: state.spotify.friends.length,
+    profilePic: state.spotify.profilePic
   });
 };
 
