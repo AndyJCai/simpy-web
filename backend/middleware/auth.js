@@ -36,6 +36,11 @@ exports.auth2 = async (req, res, next) => {
           })
         }
       })
+      .catch ((error) => {
+        res.status(401).json({
+          error: 'Invalid request!'
+        });
+      })
 
   } catch (error) {
     res.status(401).json({

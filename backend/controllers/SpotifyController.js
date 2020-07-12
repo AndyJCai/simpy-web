@@ -19,7 +19,6 @@ router.get('/top/tracks/:user_id', auth, (req, res) => {
 	spotifyApi
 		.getMyTopTracks()
 		.then((result) => {
-			console.log(result);
 			var track_ids = [];
 			result.body['items'].forEach((element) => {
 				track_ids.push(element['id']);

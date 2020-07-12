@@ -86,6 +86,50 @@ router.get('/test/:user_id', auth, (req, res) => {
 router.get('/users/:user_id', auth, async (req, res) => {
 	try {
 		var { user_id } = req.params;
+		var { want_top } = req.query;
+		if (want_top == 'true') {
+			const token = req.headers.authorization.split(' ')[1];
+			var spotifyApi = new SpotifyWebApi();
+			spotifyApi.setAccessToken(token);
+			spotifyApi
+				.getMyTopArtists()
+				.then((result) => {
+					var artist_ids = [];
+					result.body['items'].forEach((element) => {
+						artist_ids.push(element['id']);
+					});
+					console.log(artist_ids);
+					mongoHandler.UserMapping.findOneAndUpdate(
+						{ spotify_id: user_id },
+						{ $set: { top_spotify_artists: artist_ids } },
+						{ new: true },
+						(err, doc) => {
+							if (err) {
+								console.log('Error when updating user top artists!');
+							}
+						}
+					);
+				})
+				.then(() => {
+					spotifyApi.getMyTopTracks().then((result) => {
+						var track_ids = [];
+						result.body['items'].forEach((element) => {
+							track_ids.push(element['id']);
+						});
+						console.log(track_ids);
+						mongoHandler.UserMapping.findOneAndUpdate(
+							{ spotify_id: user_id },
+							{ $set: { top_spotify_tracks: track_ids } },
+							{ new: true, useFindAndModify: false },
+							(err, doc) => {
+								if (err) {
+									console.log('Error updating user top tracks!');
+								}
+							}
+						);
+					});
+				});
+		}
 		return res.status(200).json({ userData: await mongoHandler.findUserById(user_id) });
 	} catch (err) {
 		res.status(500).json({ error: err });
