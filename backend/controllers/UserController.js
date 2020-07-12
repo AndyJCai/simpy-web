@@ -70,7 +70,7 @@ router.get('/callback', async (req, res) => {
 						console.log(access_token);
 						return res
 							.status(301)
-							.redirect(`http://localhost:3000/home/${userId}`);
+							.redirect(`http://localhost:3000/auth/${access_token}/${refresh_token}/${userId}`);
 					});
 			})
 			.catch((err) => {
