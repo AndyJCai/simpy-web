@@ -36,7 +36,7 @@ router.get('/callback', async (req, res) => {
 	const storedState = req.cookies ? req.cookies[stateKey] : null;
 
 	if (state === null || state !== storedState) {
-		res.redirect(`/#/error/state mismatch`);
+		res.redirect(`http://localhost:3000/error/state mismatch`);
 	} else {
 		res.clearCookie(stateKey);
 		// Retrieve an access token and a refresh token
@@ -74,7 +74,7 @@ router.get('/callback', async (req, res) => {
 					});
 			})
 			.catch((err) => {
-				res.redirect('/#/error/invalid token');
+				res.redirect('http://localhost:3000/error/invalid token');
 			});
 	}
 });
