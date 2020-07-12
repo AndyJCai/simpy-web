@@ -3,6 +3,7 @@ import styled from "styled-components";
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { storeSpotifyInfo } from '../actions';
+import {apiUrl } from '../Api';
 
 import Sidebar from "../components/Sidebar";
 import NewsFeed from "../components/NewsFeed/NewsFeed";
@@ -37,7 +38,7 @@ class Home extends React.Component {
     const config = {
       headers: { Authorization: `Bearer ${this.props.accessToken}` }
     };
-    axios.get(`http://localhost:8888/users/${this.props.userId}`, config)
+    axios.get(`${apiUrl}/users/${this.props.userId}`, config)
       .then((res) => {
         console.log("DATA: " + JSON.stringify(res.data));
         console.log(res.data.userData.profile_pic);

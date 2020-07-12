@@ -62,7 +62,7 @@ export default class Onboard extends React.Component<RouteComponentProps> {
     //fetch("http://localhost:8888/login").then((res) => {
     //  window.location.href = `http://localhost:3000/home/${res["userId"]}`;
     //})
-    window.location.href = "http://localhost:8888/login";
+    window.location.href = `${apiUrl}/login`;
   }
 
   render() {
