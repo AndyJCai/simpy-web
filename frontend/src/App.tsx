@@ -3,6 +3,7 @@ import { Router, Switch, Route } from "react-router-dom";
 
 import Onboard from "./pages/Onboard";
 import Home from "./pages/Home";
+import Settings from "./pages/Settings";
 import history from "./history";
 
 const App = () => {
@@ -11,7 +12,8 @@ const App = () => {
       <Router history={history}>
         <div>
           <Route exact path="/" component={Onboard} />
-          <Route path="/home/:user_id" component={Home} />
+          <Route exact path="/home/:user_id" component={Home} />
+          <Route exact path="/settings/:user_id" component={Settings} />
         </div>
       </Router>
     </div>

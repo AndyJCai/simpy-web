@@ -1,4 +1,11 @@
-import { SIGN_IN, SIGN_OUT, GET_NEWSFEED, GET_NEWSCARD, DELETE_NEWSCARD } from './types';
+import {
+  SIGN_IN,
+  SIGN_OUT,
+  GET_NEWSFEED,
+  GET_NEWSCARD,
+  DELETE_NEWSCARD,
+  CHANGE_COLOR
+} from './types';
 import history from '../history';
 
 export const signIn = (userId) => {
@@ -28,4 +35,11 @@ export const getNewsCard = (cardId) => async (dispatch) => {
 
 export const deleteNewsCard = (cardId) => async (dispatch) => {
   dispatch({ type: DELETE_NEWSCARD, payload: cardId });
+}
+
+export const changeColor = (userColor) => {
+  return {
+    type: CHANGE_COLOR,
+    userColor: userColor
+  }
 }

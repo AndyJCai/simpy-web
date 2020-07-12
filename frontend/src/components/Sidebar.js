@@ -1,12 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import SettingsCog from "../resources/settings.svg";
 
 const Wrapper = styled("div")`
+
+  background: black;
   display: flex;
   height: 100vh;
-  border-right: 1px solid var(--primary-white);
+  border-right: 1px solid white;
   justify-content: space-between;
   flex-direction: column;
   position: sticky;
@@ -52,6 +55,7 @@ const Prof = styled("div")`
 `;
 
 const Settings = styled("div")`
+  color: white;
   border-top: var(--primary-white) solid 1px;
   cursor: pointer;
   display: flex;
@@ -84,6 +88,7 @@ const Cog = styled("div")`
 `;
 
 const Name = styled("p")`
+  color: white;
   font-size: 32px;
   text-align: center;
   font-weight: bold;
@@ -98,12 +103,14 @@ const Name = styled("p")`
 `;
 
 const Handle = styled("p")`
+  color: white;
   text-align: center;
   margin-top: 10px;
   width: 90%;
 `;
 
 const Friends = styled("div")`
+  color: white;
   width: 70%;
   text-align: center;
   border: 0.5px var(--primary-white) solid;
@@ -118,7 +125,8 @@ const Friends = styled("div")`
   }
 `;
 
-export default class Sidebar extends React.Component {
+class Sidebar extends React.Component {
+
   render() {
     return (
       <>
@@ -131,10 +139,16 @@ export default class Sidebar extends React.Component {
           </Prof>
           <Settings>
             <Cog />
-            Settings
+            <Link to={`/settings/${this.props.userId}`}>Settings</Link>
           </Settings>
         </Wrapper>
       </>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return ({ userId: 'lorneez' });
+};
+
+export default connect(mapStateToProps)(Sidebar);

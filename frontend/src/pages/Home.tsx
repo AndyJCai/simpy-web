@@ -32,9 +32,9 @@ class Home extends React.Component<{}, { onFeed: number }> {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:8888//user_spotify_data/lorneez`)
+    axios.get(`http://localhost:8888/user_spotify_data/lorneez`)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
       })
   }
 

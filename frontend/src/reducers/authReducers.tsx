@@ -3,7 +3,7 @@ import { SIGN_IN, SIGN_OUT } from '../actions/types';
 const STARTING_STATE = {
   isSignedIn: null,
   userId: null
-}
+};
 
 export default (state = STARTING_STATE, action) => {
   switch(action.type){
@@ -15,5 +15,5 @@ export default (state = STARTING_STATE, action) => {
       return { ...state, isSignedIn: false, userId: null };
     default:
       return state;
-  }
-}
+  };
+};
