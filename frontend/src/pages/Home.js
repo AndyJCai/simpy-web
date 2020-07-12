@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import axios from 'axios';
-import { signIn } from '../actions';
 import { connect } from 'react-redux';
 
 import Sidebar from "../components/Sidebar";
@@ -25,16 +24,22 @@ const Sections = styled("div")`
   flex-direction: row-reverse;
 `;
 
-class Home extends React.Component<{}, { onFeed: number }> {
+class Home extends React.Component {
+  state = { onFeed: null };
+
   constructor(props) {
     super(props);
     this.updateSec = this.updateSec.bind(this);
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:8888/user_spotify_data/lorneez`)
+    const config = {
+      headers: { Authorization: `Bearer ${this.props.accessToken}` }
+    };
+    axios.get(`http://localhost:8888/users/${this.props.userId}`, config)
       .then((res) => {
-        console.log(res.data);
+        console.log("DATA: " + JSON.stringify(res.data));
+        console.log(res.data.userData.profile_pic);
       })
   }
 
@@ -84,4 +89,12 @@ class Home extends React.Component<{}, { onFeed: number }> {
   }
 }
 
-export default connect(null, { signIn })(Home);
+const mapStateToProps = (state) => {
+  return ({
+    userId: state.auth.userId,
+    accessToken: state.auth.accessToken,
+    refreshToken: state.auth.refreshToken
+  })
+}
+
+export default connect(mapStateToProps)(Home);

@@ -8,10 +8,12 @@ import {
 } from './types';
 import history from '../history';
 
-export const signIn = (userId) => {
+export const signIn = (userId, accessToken, refreshToken) => {
   return {
     type: SIGN_IN,
-    userId: userId
+    userId: userId,
+    accessToken: accessToken,
+    refreshToken: refreshToken
   }
 }
 
