@@ -4,7 +4,8 @@ import {
   GET_NEWSFEED,
   GET_NEWSCARD,
   DELETE_NEWSCARD,
-  CHANGE_COLOR
+  CHANGE_COLOR,
+  STORE_SPOTIFY_INFO
 } from './types';
 import history from '../history';
 
@@ -43,5 +44,15 @@ export const changeColor = (userColor) => {
   return {
     type: CHANGE_COLOR,
     userColor: userColor
+  }
+}
+
+export const storeSpotifyInfo = (displayName, profilePic, friends, spotifyId) => {
+  return {
+    type: STORE_SPOTIFY_INFO,
+    displayName: displayName,
+    profilePic: profilePic,
+    friends: friends,
+    spotifyId: spotifyId
   }
 }

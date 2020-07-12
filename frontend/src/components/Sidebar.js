@@ -133,9 +133,9 @@ class Sidebar extends React.Component {
         <Wrapper>
           <Prof>
             <ProfilePic src="" />
-            <Name>Henry</Name>
-            <Handle>@username</Handle>
-            <Friends>100 Friends</Friends>
+            <Name>{this.props.displayName}</Name>
+            <Handle>@{this.props.spotifyId}</Handle>
+            <Friends>{this.props.friends} Friends</Friends>
           </Prof>
           <Settings>
             <Cog />
@@ -148,7 +148,11 @@ class Sidebar extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return ({ userId: 'lorneez' });
+  return ({
+    displayName: state.spotify.displayName,
+    spotifyId: state.spotify.spotifyId,
+    friends: state.spotify.friends.length
+  });
 };
 
 export default connect(mapStateToProps)(Sidebar);

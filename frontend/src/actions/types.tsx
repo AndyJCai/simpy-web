@@ -6,3 +6,5 @@ export const GET_NEWSCARD = 'GET_NEWSCARD';
 export const DELETE_NEWSCARD = 'DELETE_NEWSCARD';
 
 export const CHANGE_COLOR = 'CHANGE_COLOR';
+
+export const STORE_SPOTIFY_INFO = 'STORE_SPOTIFY_INFO';

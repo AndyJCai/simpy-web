@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { storeSpotifyInfo } from '../actions';
 
 import Sidebar from "../components/Sidebar";
 import NewsFeed from "../components/NewsFeed/NewsFeed";
@@ -40,6 +41,7 @@ class Home extends React.Component {
       .then((res) => {
         console.log("DATA: " + JSON.stringify(res.data));
         console.log(res.data.userData.profile_pic);
+        this.props.storeSpotifyInfo(res.data.userData.display_name, res.data.userData.profile_pic, res.data.userData.friends, res.data.userData.spotify_id)
       })
   }
 
@@ -97,4 +99,4 @@ const mapStateToProps = (state) => {
   })
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, { storeSpotifyInfo })(Home);
