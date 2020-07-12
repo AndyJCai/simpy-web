@@ -91,8 +91,12 @@ router.get('/test/:user_id', auth, (req, res) => {
 })
 
 router.get('/users/:user_id', auth, async (req, res) => {
-	var { user_id } = req.params;
-	return res.status(200).json({ userData: await mongoHandler.findUserById(user_id) });
+	try {
+		var { user_id } = req.params;
+		return res.status(200).json({ userData: await mongoHandler.findUserById(user_id) });
+	} catch (err) {
+		res.status(500).json({ error: err });
+	}
 });
 
 // return a JSON of all the users that the current user follows
