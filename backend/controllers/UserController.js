@@ -96,13 +96,13 @@ router.get('/users/:user_id', auth, async (req, res) => {
 });
 
 // return a JSON of all the users that the current user follows
-router.get('friends/:user_id', auth, (req, res) => {
+router.get('/friends/:user_id', auth, (req, res) => {
 	var { user_id } = req.params;
 	let friends = mongoHandler.getUserFriends(mongoHandler.spotifyToMongoId(user_id));
 	res.send({ friends: friends });
 });
 
-router.get('friends/:user_id/add', auth, async (req, res) => {
+router.get('/friends/:user_id/add', auth, async (req, res) => {
 	var requester_id = req.params.user_id;
 	var recipient_id = req.query.recipient_id;
 	let requester_mongoid = await mongoHandler.spotifyToMongoId(requester_id);
@@ -111,7 +111,7 @@ router.get('friends/:user_id/add', auth, async (req, res) => {
 	res.send(`user ${requester_id} made a friend request to ${recipient_id}`);
 });
 
-router.get('friends/:user_id/reject', auth, async (req, res) => {
+router.get('/friends/:user_id/reject', auth, async (req, res) => {
 	var requester_id = req.params.user_id;
 	var recipient_id = req.query.recipient_id;
 	let requester_mongoid = await mongoHandler.spotifyToMongoId(requester_id);
@@ -120,7 +120,7 @@ router.get('friends/:user_id/reject', auth, async (req, res) => {
 	res.send(`user ${recipient_id} rejected a friend request from ${requester_id}`);
 });
 
-router.get('friends/:user_id/accept', auth, async (req, res) => {
+router.get('/friends/:user_id/accept', auth, async (req, res) => {
 	var requester_id = req.params.user_id;
 	var recipient_id = req.query.recipient_id;
 	let requester_mongoid = await mongoHandler.spotifyToMongoId(requester_id);
