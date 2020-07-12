@@ -2,7 +2,7 @@ import { STORE_SPOTIFY_INFO } from '../actions/types';
 
 const STARTING_STATE = {
   displayName: null,
-  profilePic: null,
+  profilePic: [],
   friends: [],
   spotifyId: null
 };
