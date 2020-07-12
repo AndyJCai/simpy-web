@@ -11,6 +11,7 @@ const UserSchema = new Schema(
 			default: uuid.v4,
 			unique: true,
 		},
+		profile_pic : {type: Array, default: []},
 		spotify_id: { type: String, required: true, unique: true },
 		apple_id: { type: String, required: false },
 		soundcloud_id: { type: String, required: false },
