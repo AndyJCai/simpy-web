@@ -21,11 +21,9 @@ class MongoHandler {
 		return;
 	}
 
-	async findUser(user) {
+	async findUserById(userId) {
 		return this.UserMapping.findOne({
-			spotify_id: user.id,
-			email: user.email,
-			display_name: user.display_name
+			spotify_id: userId
 		}, (err, result) => {
 			if(err) return null;
 			return result;

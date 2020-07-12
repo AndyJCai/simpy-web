@@ -65,23 +65,18 @@ router.get('/callback', async (req, res) => {
 						//window.location.href = `http://localhost:3000/home/${userId}`;
 						// res.status(301).redirect(`http://localhost:3000/home/${userId}`)
 						//return res.status(200).json({ userId: userId });
-						//console.log(userId);
+						console.log(userId);
 						// we can also pass the userId to the browser to make requests from there
-						//console.log(access_token);
+						console.log(access_token);
 						return res
 							.status(301)
-							.json({ userId: userId, accessToken: access_token, refreshToken: refresh_token, body: userBody});
+							.redirect(`http://localhost:3000/home/${userId}`);
 					});
 			})
 			.catch((err) => {
 				res.redirect('/#/error/invalid token');
 			});
 	}
-});
-
-router.get('/user_spotify_data/:user_id', (req, res) => {
-	var { user_id } = req.params;
-	return res.status(200).json({ userData: mongoHandler.findUser(user_id) });
 });
 
 router.get('/refresh_token', (req, res) => {
@@ -95,6 +90,10 @@ router.get('/test/:user_id', auth, (req, res) => {
 	console.log('Got through auth!');
 })
 
+router.get('/users/:user_id', auth, async (req, res) => {
+	var { user_id } = req.params;
+	return res.status(200).json({ userData: await mongoHandler.findUserById(user_id) });
+});
 
 // return a JSON of all the users that the current user follows
 router.get('friends/:user_id', auth, (req, res) => {
