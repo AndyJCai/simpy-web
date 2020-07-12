@@ -57,17 +57,10 @@ router.get('/callback', async (req, res) => {
 					.then(({ body }) => {
 						mongoHandler.addNewUser(body);
 						userId = body['id'];
-						userBody = body;
 					})
 					.then(() => {
-
-						//res.redirect(`/home/${userId}`);
-						//window.location.href = `http://localhost:3000/home/${userId}`;
-						// res.status(301).redirect(`http://localhost:3000/home/${userId}`)
-						//return res.status(200).json({ userId: userId });
-						console.log(userId);
-						// we can also pass the userId to the browser to make requests from there
-						console.log(access_token);
+						console.log(`usreId: ${userId}`);
+						console.log(`access_token: ${access_token}`);
 						return res
 							.status(301)
 							.redirect(`http://localhost:3000/auth/${access_token}/${refresh_token}/${userId}`);
@@ -80,15 +73,15 @@ router.get('/callback', async (req, res) => {
 });
 
 router.get('/refresh_token', (req, res) => {
-	spotifyApi.refreshAccessToken().then( (data) => {
+	spotifyApi.refreshAccessToken().then((data) => {
 		const { expires_in, access_token, refresh_token } = data.body;
 		return res.status(200).json({ accessToken: access_token, refreshToken: refresh_token });
 	});
-})
+});
 
 router.get('/test/:user_id', auth, (req, res) => {
 	console.log('Got through auth!');
-})
+});
 
 router.get('/users/:user_id', auth, async (req, res) => {
 	try {
