@@ -62,9 +62,12 @@ class NewsCard extends React.Component {
       return (
         <Container>
           <Row>
-            {this.props.profilePic.length > 0 ? <ProfilePic src={this.props.profilePic[0]} /> :  <ProfilePic src="" />}
-            <Title>{this.props.entry.name}</Title>
-            <Text>{this.props.entry.userName}</Text>
+            <Column>
+              {this.props.profilePic.length > 0 ? <ProfilePic src={this.props.profilePic[0]} /> :  <ProfilePic src="" />}
+              <Title>{this.props.entry.name}</Title>
+              <Text>{this.props.entry.userName}</Text>
+            </Column>
+            <div></div>
             <button onClick={() => this.toggleExpand()}>Close</button>
           </Row>
           {this.props.newsCard.userName}
@@ -78,10 +81,13 @@ class NewsCard extends React.Component {
     return (
       <Container>
         <Row>
-          {this.props.profilePic.length > 0 ? <ProfilePic src={this.props.profilePic[0]} /> :  <ProfilePic src="" />}
-          <Title>{this.props.entry.name}</Title>
-          <Text>{this.props.entry.userName}</Text>
-          <button onClick={() => this.toggleExpand()}>Close</button>
+          <Column>
+            {this.props.profilePic.length > 0 ? <ProfilePic src={this.props.profilePic[0]} /> :  <ProfilePic src="" />}
+            <Title>{this.props.entry.name}</Title>
+            <Text>{this.props.entry.userName}</Text>
+          </Column>
+          <div></div>
+          <button onClick={() => this.toggleExpand()}>Expand</button>
         </Row>
       </Container>
     )
