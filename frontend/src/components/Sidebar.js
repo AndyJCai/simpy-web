@@ -149,6 +149,7 @@ class Sidebar extends React.Component {
 
 const mapStateToProps = (state) => {
   return ({
+    userId: state.auth.userId,
     displayName: state.spotify.displayName,
     spotifyId: state.spotify.spotifyId,
     friends: state.spotify.friends.length,

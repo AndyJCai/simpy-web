@@ -5,7 +5,7 @@ import NewsCard from './NewsCard';
 
 class NewsFeed extends React.Component {
   componentDidMount() {
-    this.props.getNewsFeed(this.props.userId);
+    //this.props.getNewsFeed(this.props.userId);
   }
 
   renderNewsFeedCards = () => {
@@ -13,9 +13,7 @@ class NewsFeed extends React.Component {
       return (
         <div key={entry.userName}>
 
-          <h4>{entry.name}</h4>
-          <div>{entry.userName}</div>
-
+          <NewsCard entry={entry} cardId={entry.cardId} />
         </div>
       )
     })
@@ -38,7 +36,18 @@ const mapStateToProps = (state) => {
       [
         {
           name: "lorne",
-          userName: "lorneez"
+          userName: "lorneez",
+          cardId: 1
+        },
+        {
+          name: "andy",
+          userName: "andycai",
+          cardId: 2
+        },
+        {
+          name: "bob",
+          userName: "bobsmith",
+          cardId: 3
         }
       ]
 
