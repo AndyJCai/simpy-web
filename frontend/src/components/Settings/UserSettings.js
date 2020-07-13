@@ -24,6 +24,7 @@ const Container = styled("div")`
   padding-top: 2vw;
   padding-left: 3vw;
   padding-right: 3vw;
+
 `;
 
 const Text = styled("p")`

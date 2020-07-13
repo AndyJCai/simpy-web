@@ -9,10 +9,11 @@ const Wrapper = styled("div")`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--primary-yellow);
+  background-color: black;
 `;
 
 const Content = styled("div")`
+  color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,20 +37,20 @@ const Welcome = styled("p")`
 
 const SpotifyButton = styled("div")`
   text-decoration: none;
-  border: 2.5px solid black;
+  border: 2.5px solid white;
   border-radius: 5px;
   font-weight: bold;
   margin: 50px auto 0px;
   padding: 25px 70px;
-  color: black;
+  color: white;
   cursor: pointer;
   transition: 0.2s;
   @media screen and (max-width: 650px) {
     padding: 20px 55px;
   }
   &:hover {
-    color: var(--primary-yellow);
-    background-color: black;
+    color: black;
+    background-color: white;
   }
 `;
 
@@ -73,48 +74,66 @@ const Column = styled("div")`
 `;
 
 const Color1 = styled("div")`
-  margin-top: .5vw;
-  width: 16%;
-  height: 2vw;
-  background: #005073;
+position: absolute;
+left: 0%;
+right: 83.33%;
+top: 78.78%;
+bottom: 13.22%;
+
+background: #005073;
 `
 
 const Color2 = styled("div")`
-  margin-top: .5vw;
-  width: 16%;
-  height: 2vw;
-  background: #189AD3;
+position: absolute;
+left: 16.67%;
+right: 66.6%;
+top: 78.78%;
+bottom: 13.22%;
+
+background: #189AD3;
 `
 
 const Color3 = styled("div")`
-  margin-top: .5vw;
-  width: 16%;
-  height: 2vw;
-  background: #71C7EC;
+position: absolute;
+left: 33.4%;
+right: 49.93%;
+top: 78.78%;
+bottom: 13.22%;
+
+background: #71C7EC;
 `
 
 const Color4 = styled("div")`
-  margin-top: .5vw;
-  width: 16%;
-  height: 2vw;
-  background: #B9BFFF;
+position: absolute;
+left: 50.07%;
+right: 33.19%;
+top: 78.78%;
+bottom: 13.22%;
+
+background: #B9BFFF;
 `
 
 const Color5 = styled("div")`
-  margin-top: .5vw;
-  width: 16%;
-  height: 2vw;
-  background: #8B74BD;
+position: absolute;
+left: 66.81%;
+right: 16.53%;
+top: 78.78%;
+bottom: 13.22%;
+
+background: #8B74BD;
 `
 
 const Color6 = styled("div")`
-  margin-top: .5vw;
-  width: 16%;
-  height: 2vw;
-  background: #7953A9;
+position: absolute;
+left: 83.47%;
+right: -0.21%;
+top: 78.78%;
+bottom: 13.22%;
+
+background: #7953A9;
 `
 
-export default class Onboard extends React.Component<RouteComponentProps> {
+export default class Onboard extends React.Component {
   // refresh page for redirect to spotify
   spotifyLogin() {
     // this.props.history.push({
@@ -130,23 +149,25 @@ export default class Onboard extends React.Component<RouteComponentProps> {
     return (
       <>
         <Wrapper>
+          <Column>
           <Content>
             <Welcome>Welcome to Simpy.</Welcome>
             <p style={{ width: "70%" }}>
-              Discover what your friends are listening to.
+              Discover what your friends are vibing to.
             </p>
             <SpotifyButton onClick={this.spotifyLogin.bind(this)}>
               Sign up with Spotify
             </SpotifyButton>
-            <Row>
-              <Color1></Color1>
-              <Color2></Color2>
-              <Color3></Color3>
-              <Color4></Color4>
-              <Color5></Color5>
-              <Color6></Color6>
-            </Row>
           </Content>
+          <Row>
+            <Color1></Color1>
+            <Color2></Color2>
+            <Color3></Color3>
+            <Color4></Color4>
+            <Color5></Color5>
+            <Color6></Color6>
+          </Row>
+          </Column>
         </Wrapper>
       </>
     );
