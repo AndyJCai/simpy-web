@@ -12,18 +12,18 @@ const UserSchema = new Schema(
 			unique: true,
 		},
 		profile_pic : {type: Array, default: []},
-		spotify_id: { type: String, required: true, unique: true },
-		apple_id: { type: String, required: false },
-		soundcloud_id: { type: String, required: false },
+		spotify_id: { type: String, required: true, unique: true, immutable: true},
 		email: {
 			type: mongo_type_email,
 			required: true,
 			unique: true,
+			immutable: true
 		},
 		display_name: { type: String, default: 'N/A' },
 		top_spotify_tracks: {type: Array, default: []},
 		top_spotify_artists: {type: Array, default: []},
-		friends: [{ type: Schema.Types.ObjectId, ref: 'Friend'}]
+		friends: [{ type: Schema.Types.ObjectId, ref: 'Friend'}],
+		color_setting : {type: String, required: true, default: "#005073"}
 	},
 	{ timestamps: true, collection: 'User' }
 );
