@@ -136,6 +136,54 @@ router.get('/users/:user_id', auth, async (req, res) => {
 	}
 });
 
+router.post('/users/:user_id', auth, async (req, res) => {
+	var { user_id } = req.params;
+	var { colorSetting, displayName, username } = req.body;
+	if (colorSetting) {
+		mongoHandler.UserMapping.findOneAndUpdate(
+			{spotify_id: user_id},
+			{ $set: {color_setting : colorSetting} },
+			{ new: true, useFindAndModify: false },
+			(err, doc) => {
+				if (err) {
+					console.log('Error updating user color settings!');
+					res.status(400).json({err: "Error updating user color settings!"});
+				}
+			}
+		);
+	}
+
+	if (displayName) {
+		mongoHandler.UserMapping.findOneAndUpdate(
+			{spotify_id: user_id},
+			{ $set: {display_name : displayName} },
+			{ new: true, useFindAndModify: false },
+			(err, doc) => {
+				if (err) {
+					console.log('Error updating user displayed name!');
+					res.status(400).json({err: "Error updating user displayed name!"});
+				}
+			}
+		);
+	}
+
+	if (username) {
+		mongoHandler.UserMapping.findOneAndUpdate(
+			{spotify_id: user_id},
+			{ $set: {username : username} },
+			{ new: true, useFindAndModify: false },
+			(err, doc) => {
+				if (err) {
+					console.log('Error updating user handle!');
+					res.status(400).json({err: "Error updating user handle!"});
+				}
+			}
+		);
+	}
+
+	res.status(200).json({message: "Successfully updated posted fields!"});
+})
+
 // return a JSON of all the users that the current user follows
 router.get('/friends/:user_id', auth, (req, res) => {
 	var { user_id } = req.params;
