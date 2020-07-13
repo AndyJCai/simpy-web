@@ -62,8 +62,8 @@ class NewsCard extends React.Component {
       return (
         <Container>
           <Row>
+            {this.props.profilePic.length > 0 ? <ProfilePic src={this.props.profilePic[0]} /> :  <ProfilePic src="" />}
             <Column>
-              {this.props.profilePic.length > 0 ? <ProfilePic src={this.props.profilePic[0]} /> :  <ProfilePic src="" />}
               <Title>{this.props.entry.name}</Title>
               <Text>{this.props.entry.userName}</Text>
             </Column>
@@ -81,8 +81,8 @@ class NewsCard extends React.Component {
     return (
       <Container>
         <Row>
+          {this.props.profilePic.length > 0 ? <ProfilePic src={this.props.profilePic[0]} /> :  <ProfilePic src="" />}
           <Column>
-            {this.props.profilePic.length > 0 ? <ProfilePic src={this.props.profilePic[0]} /> :  <ProfilePic src="" />}
             <Title>{this.props.entry.name}</Title>
             <Text>{this.props.entry.userName}</Text>
           </Column>

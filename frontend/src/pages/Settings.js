@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Sidebar from '../components/Sidebar';
 import styled from "styled-components";
-import UserSettings from '../components/Settings/UserSettings';
 import DisplaySettings from '../components/Settings/DisplaySettings';
 
 const Wrapper = styled("div")`
@@ -32,7 +31,6 @@ class Settings extends React.Component {
           <Sidebar />
           <Container>
             <Title userColor={this.props.userColor}>settings</Title>
-            <UserSettings />
             <DisplaySettings />
             <a href={`/home/${this.props.userId}`}>home</a>
           </Container>

@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from "styled-components";
 import { changeColor } from '../../actions';
+import {apiUrl } from '../../Api';
+import axios from 'axios';
 
 const Wrapper = styled("div")`
   display: flex;
@@ -22,6 +24,7 @@ const Container = styled("div")`
   padding-top: 2vw;
   padding-left: 3vw;
   padding-right: 3vw;
+  margin-top: 5vw;
 `;
 
 const Text = styled("p")`
@@ -39,6 +42,11 @@ const Row = styled("div")`
 
 const Column = styled("div")`
   width: 50%;
+  display: flex;
+  flex-flow: column wrap;
+`;
+const ColumnContainer = styled("div")`
+  width: 100%;
   display: flex;
   flex-flow: column wrap;
 `;
@@ -97,38 +105,77 @@ const colorBank = {
 class DisplaySettings extends React.Component {
   onColorChange = (color) => {
     this.props.changeColor(color);
+    console.log(this.props.accessToken)
+    const config = {
+      headers: { Authorization: `Bearer ${this.props.accessToken}` },
+    };
+    const body = {
+      body: {
+        displayName: this.props.displayName,
+        colorSetting: this.props.colorSetting,
+        username: this.props.username
+      }
+    }
+
+    axios.post(`${apiUrl}/users/${this.props.userId}`, body, config)
+      .then((res) => {
+        console.log("DATA: " + JSON.stringify(res.data));
+      })
   }
 
   render() {
     return (
       <Wrapper>
-        <Container>
-          <Title>display settings</Title>
-          <Row>
-            <Column>
-              <Text>display name:</Text>
-              <Text>your mood:</Text>
-            </Column>
-            <Column>
-              <Text>@username</Text>
-            </Column>
-          </Row>
-          <Row>
-            <Color1 onClick={() => this.onColorChange(colorBank.color1)}></Color1>
-            <Color2 onClick={() => this.onColorChange(colorBank.color2)}></Color2>
-            <Color3 onClick={() => this.onColorChange(colorBank.color3)}></Color3>
-            <Color4 onClick={() => this.onColorChange(colorBank.color4)}></Color4>
-            <Color5 onClick={() => this.onColorChange(colorBank.color5)}></Color5>
-            <Color6 onClick={() => this.onColorChange(colorBank.color6)}></Color6>
-          </Row>
-        </Container>
+        <ColumnContainer>
+          <Container>
+            <Title>user settings</Title>
+            <Row>
+              <Column>
+                <Text>username:</Text>
+                <Text>spotify account:</Text>
+                <Text>private mode:</Text>
+              </Column>
+              <Column>
+                <Text>@username</Text>
+                <Text>@spotify-username</Text>
+                <Text>button</Text>
+              </Column>
+            </Row>
+          </Container>
+          <Container>
+            <Title>display settings</Title>
+            <Row>
+              <Column>
+                <Text>display name:</Text>
+                <Text>your mood:</Text>
+              </Column>
+              <Column>
+                <Text>@username</Text>
+              </Column>
+            </Row>
+            <Row>
+              <Color1 onClick={() => this.onColorChange(colorBank.color1)}></Color1>
+              <Color2 onClick={() => this.onColorChange(colorBank.color2)}></Color2>
+              <Color3 onClick={() => this.onColorChange(colorBank.color3)}></Color3>
+              <Color4 onClick={() => this.onColorChange(colorBank.color4)}></Color4>
+              <Color5 onClick={() => this.onColorChange(colorBank.color5)}></Color5>
+              <Color6 onClick={() => this.onColorChange(colorBank.color6)}></Color6>
+            </Row>
+          </Container>
+        </ColumnContainer>
       </Wrapper>
     );
   };
 };
 
 const mapStateToProps = (state) => {
-  return ({ userId: state.auth.userId });
+  return ({
+    userId: state.auth.userId,
+    accessToken: state.auth.accessToken,
+    displayName: state.spotify.displayName,
+    colorSetting: state.settings.userColor,
+    username: state.spotify.spotifyId
+  });
 }
 
 export default connect(mapStateToProps, { changeColor })(DisplaySettings);
