@@ -53,6 +53,67 @@ const SpotifyButton = styled("div")`
   }
 `;
 
+const Text = styled("p")`
+`;
+
+const Title = styled("h3")`
+`;
+
+const Row = styled("div")`
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  justify-content: space-between;
+`;
+
+const Column = styled("div")`
+  width: 50%;
+  display: flex;
+  flex-flow: column wrap;
+`;
+
+const Color1 = styled("div")`
+  margin-top: .5vw;
+  width: 16%;
+  height: 2vw;
+  background: #005073;
+`
+
+const Color2 = styled("div")`
+  margin-top: .5vw;
+  width: 16%;
+  height: 2vw;
+  background: #189AD3;
+`
+
+const Color3 = styled("div")`
+  margin-top: .5vw;
+  width: 16%;
+  height: 2vw;
+  background: #71C7EC;
+`
+
+const Color4 = styled("div")`
+  margin-top: .5vw;
+  width: 16%;
+  height: 2vw;
+  background: #B9BFFF;
+`
+
+const Color5 = styled("div")`
+  margin-top: .5vw;
+  width: 16%;
+  height: 2vw;
+  background: #8B74BD;
+`
+
+const Color6 = styled("div")`
+  margin-top: .5vw;
+  width: 16%;
+  height: 2vw;
+  background: #7953A9;
+`
+
 export default class Onboard extends React.Component<RouteComponentProps> {
   // refresh page for redirect to spotify
   spotifyLogin() {
@@ -77,6 +138,14 @@ export default class Onboard extends React.Component<RouteComponentProps> {
             <SpotifyButton onClick={this.spotifyLogin.bind(this)}>
               Sign up with Spotify
             </SpotifyButton>
+            <Row>
+              <Color1></Color1>
+              <Color2></Color2>
+              <Color3></Color3>
+              <Color4></Color4>
+              <Color5></Color5>
+              <Color6></Color6>
+            </Row>
           </Content>
         </Wrapper>
       </>
