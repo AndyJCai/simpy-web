@@ -11,12 +11,11 @@ import NewsFeed from "../components/NewsFeed/NewsFeed";
 const Wrapper = styled("div")`
   display: flex;
   width: 100%;
-  background: black;
+  background: var(--primary-black);
   font-family: Helvetica, sans-serif;
 `;
 
 const MainPage = styled("div")`
-  color: white;
   display: flex;
   flex-direction: column;
   margin-left: 150px;
@@ -48,9 +47,7 @@ class Home extends React.Component {
           res.data.userData.display_name,
           profilePic,
           res.data.userData.friends,
-          res.data.userData.spotify_id,
-          res.data.userData.username
-        )
+          res.data.userData.spotify_id)
       })
   }
 
@@ -77,14 +74,6 @@ class Home extends React.Component {
     this.setState({
       onFeed: event.target.dataset.val
     });
-    console.log(this.state.onFeed)
-  }
-
-  renderContent() {
-    if(this.state.onFeed == 0){
-      return <div>Vibe Check</div>
-    }
-    return <NewsFeed />
   }
 
   render() {
@@ -98,10 +87,9 @@ class Home extends React.Component {
                 Vibe Check
               </this.SecTitles>
               <this.SecTitles val={1} data-val={1} onClick={this.updateSec}>
-                News Feed
+                <NewsFeed />
               </this.SecTitles>
             </Sections>
-            {this.renderContent()}
           </MainPage>
         </Wrapper>
       </>

@@ -47,12 +47,13 @@ export const changeColor = (userColor) => {
   }
 }
 
-export const storeSpotifyInfo = (displayName, profilePic, friends, spotifyId) => {
+export const storeSpotifyInfo = (displayName, profilePic, friends, spotifyId, username) => {
   return {
     type: STORE_SPOTIFY_INFO,
     displayName: displayName,
     profilePic: profilePic,
     friends: friends,
-    spotifyId: spotifyId
+    spotifyId: spotifyId,
+    username: username
   }
 }

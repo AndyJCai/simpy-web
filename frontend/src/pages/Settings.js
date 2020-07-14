@@ -12,10 +12,10 @@ const Wrapper = styled("div")`
 `;
 
 const Container = styled("div")`
+  background: ${props => props.userColor};
   color: white;
   display: flex;
   flex-flow: column wrap;
-  background: black;
   width: 100%;
   padding: 10vw;
 `;
@@ -29,8 +29,8 @@ class Settings extends React.Component {
       return (
         <Wrapper>
           <Sidebar />
-          <Container>
-            <Title userColor={this.props.userColor}>settings</Title>
+          <Container userColor={this.props.userColor}>
+            <Title>settings</Title>
             <DisplaySettings />
             <a href={`/home/${this.props.userId}`}>home</a>
           </Container>

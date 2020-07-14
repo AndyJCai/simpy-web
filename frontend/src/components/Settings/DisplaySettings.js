@@ -173,7 +173,7 @@ const mapStateToProps = (state) => {
     accessToken: state.auth.accessToken,
     displayName: state.spotify.displayName,
     colorSetting: state.settings.userColor,
-    username: state.spotify.spotifyId
+    username: state.spotify.username
   });
 }
 
