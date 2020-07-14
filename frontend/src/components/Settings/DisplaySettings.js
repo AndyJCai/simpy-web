@@ -110,15 +110,14 @@ class DisplaySettings extends React.Component {
       headers: { Authorization: `Bearer ${this.props.accessToken}` },
     };
     const body = {
-      body: {
         displayName: this.props.displayName,
         colorSetting: this.props.colorSetting,
         username: this.props.username
-      }
     }
 
     axios.post(`${apiUrl}/users/${this.props.userId}`, body, config)
       .then((res) => {
+        console.log(body);
         console.log("DATA: " + JSON.stringify(res.data));
       })
   }
