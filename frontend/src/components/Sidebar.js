@@ -6,7 +6,7 @@ import SettingsCog from "../resources/settings.svg";
 
 const Wrapper = styled("div")`
 
-  background: black;
+  background: ${props => props.userColor};
   display: flex;
   height: 100vh;
   border-right: 1px solid white;
@@ -130,7 +130,7 @@ class Sidebar extends React.Component {
   render() {
     return (
       <>
-        <Wrapper>
+        <Wrapper userColor={this.props.userColor}>
           <Prof>
             {this.props.profilePic.length > 0 ? <ProfilePic src={this.props.profilePic[0]} /> :  <ProfilePic src="" />}
             <Name>{this.props.displayName}</Name>
@@ -153,7 +153,8 @@ const mapStateToProps = (state) => {
     displayName: state.spotify.displayName,
     spotifyId: state.spotify.spotifyId,
     friends: state.spotify.friends.length,
-    profilePic: state.spotify.profilePic
+    profilePic: state.spotify.profilePic,
+    userColor: state.settings.userColor
   });
 };
 

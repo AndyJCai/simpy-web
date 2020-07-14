@@ -11,7 +11,7 @@ import NewsFeed from "../components/NewsFeed/NewsFeed";
 const Wrapper = styled("div")`
   display: flex;
   width: 100%;
-  background: black;
+  background: ${props => props.userColor};
   font-family: Helvetica, sans-serif;
 `;
 
@@ -90,7 +90,7 @@ class Home extends React.Component {
   render() {
     return (
       <>
-        <Wrapper>
+        <Wrapper userColor={this.props.userColor}>
           <Sidebar />
           <MainPage>
             <Sections>
@@ -113,7 +113,8 @@ const mapStateToProps = (state) => {
   return ({
     userId: state.auth.userId,
     accessToken: state.auth.accessToken,
-    refreshToken: state.auth.refreshToken
+    refreshToken: state.auth.refreshToken,
+    userColor: state.settings.userColor
   })
 }
 
