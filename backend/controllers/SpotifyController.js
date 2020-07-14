@@ -7,8 +7,6 @@ var router = require('express').Router();
 var auth = require('../middleware/auth').auth2;
 var intersect = require('../utils/utils');
 
-var SpotifyController = {};
-
 //get the tracks from the Spotify API
 // query - userId
 router.get('/top/tracks/:user_id', auth, (req, res) => {
