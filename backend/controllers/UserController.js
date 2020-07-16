@@ -147,6 +147,7 @@ router.get('/users/:user_id', auth, (req, res) => {
 		}
 		return res.status(200).json({ userData: mongoHandler.findUserById(user_id) });
 	} catch (err) {
+		console.log(err);
 		res.status(400).json({ error: err });
 	}
 });
@@ -226,7 +227,7 @@ router.post('/friends/:user_id/reject', auth, async (req, res) => {
 
 router.post('/friends/:user_id/accept', auth, async (req, res) => {
 	var requester_id = req.params.user_id;
-	var { recipient_id } = req.body;	
+	var { recipient_id } = req.body;
 	let requester_mongoid = await mongoHandler.spotifyToMongoId(requester_id);
 	let recipient_mongoid = await mongoHandler.spotifyToMongoId(recipient_id);
 	mongoHandler.acceptFriendRequest(requester_mongoid, recipient_mongoid);

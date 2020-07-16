@@ -36,7 +36,7 @@ class MongoHandler {
 				spotify_id: newUser.id,
 				email: newUser.email,
         display_name: newUser.display_name,
-        profile_pic:  (() => { 
+        profile_pic:  (() => {
           var pics = []
           newUser.images.forEach((e) => {
           pics.push(e.url)
