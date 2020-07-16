@@ -22,12 +22,12 @@ class MongoHandler {
 	}
 
   findUserById(userId) {
-		this.UserMapping.findOne({
-			spotify_id: userId
-    }).then(function(doc) {
-      if (!doc) return null;
-      return doc;
-    });
+    this.UserMapping.findOne({
+			spotify_id: user_id
+		}).then(function(doc) {
+			if (!doc) return null;
+			return doc;
+		});
 	}
 
 	async addNewUser(newUser) {
