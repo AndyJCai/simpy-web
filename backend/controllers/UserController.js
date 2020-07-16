@@ -145,7 +145,13 @@ router.get('/users/:user_id', auth, (req, res) => {
 					);
 				});
 		}
-		return res.status(200).json({ userData: mongoHandler.findUserById(user_id) });
+		mongoHandler.UserMapping.findOne({
+			spotify_id: user_id
+		}).then(function(doc) {
+			if (!doc) return res.status(401).json({ error: "No record found"});
+			return res.status(200).send({ userData: doc });
+		});
+		
 	} catch (err) {
 		console.log(err);
 		res.status(400).json({ error: err });
