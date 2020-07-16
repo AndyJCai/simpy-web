@@ -89,7 +89,7 @@ router.post('/refresh_token', (req, res) => {
 	spotifyApi.setRefreshToken(refresh_token);
 	spotifyApi.refreshAccessToken().then((data) => {
 		const { expires_in, access_token, refresh_token } = data.body;
-		return res.status(200).json({ accessToken: access_token, refreshToken: refresh_token });
+		return res.status(200).json({ access_token: access_token, refresh_token: refresh_token, expires_in: expires_in });
 	}).catch((err) => {
 		console.error(err);
 		console.error("Error refreshing token!");

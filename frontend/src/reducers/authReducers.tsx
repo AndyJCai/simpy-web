@@ -1,4 +1,4 @@
-import { SIGN_IN, SIGN_OUT, REFRESH_TOKEN, DONE_REFRESHING_TOKEN, START_REFRESHING_TOKEN } from '../actions/types';
+import { SIGN_IN, SIGN_OUT, REFRESH_TOKEN, START_REFRESHING_TOKEN } from '../actions/types';
 import { refreshToken } from '../actions';
 
 const STARTING_STATE = {

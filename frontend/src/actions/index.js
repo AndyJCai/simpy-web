@@ -12,6 +12,8 @@ import {
   START_REFRESHING_TOKEN
 } from './types';
 import history from '../history';
+import axios from 'axios';
+import {apiUrl} from '../Api'
 
 export const signIn = (userId, accessToken, refreshToken, expiresIn, timeStamp) => {
   return {
@@ -33,10 +35,23 @@ export const signOut = () => {
 
 export const refreshToken = (refreshToken) => async (dispatch) => {
   // add api call to refresh
+  const config = {
+    headers: { Authorization: `Bearer ${refreshToken}` },
+  };
+
+  var accessToken, refreshToken, expiresIn;
+  axios.get(`${apiUrl}/refresh_token`, config)
+  .then((res) => {
+    accessToken = res.data.access_token;
+    refreshToken = res.data.refresh_token;
+    expiresIn = res.data.expires_in;
+  });
+  
   dispatch ({
     type: REFRESH_TOKEN,
     accessToken: accessToken,
-    refreshToken: refreshToken
+    refreshToken: refreshToken,
+    expiresIn: expiresIn
   });
 }
 
