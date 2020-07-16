@@ -97,7 +97,7 @@ router.get('/common/tracks/:user_id', auth, async (req, res) => {
 	return res.status(200).json({ common_tracks: common_tracks });
 });
 
-outer.get('/common/artists/:user_id', auth, async (req, res) => {
+router.get('/common/artists/:user_id', auth, async (req, res) => {
 	var requester_id = req.params.user_id;
 	var recipient_id = req.query.recipient_id;
 	console.log(requester_id);
