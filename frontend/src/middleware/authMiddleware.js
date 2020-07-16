@@ -1,7 +1,6 @@
-import { refreshToken } from '../actions';
+import { refreshToken, startRefreshingToken } from '../actions';
 
 export function authMiddleware({ dispatch, getState }) {
-
     return (next) => (action) => {
         // only worry about expiring token for async actions
         if (typeof action === 'function') {
@@ -13,13 +12,14 @@ export function authMiddleware({ dispatch, getState }) {
                 const timeNow = new Date().getTime();
 
                 if (expiresIn && (expiresIn > timeNow))) {
-                    // make sure we are not already refreshing the token
-                    //return refreshToken(dispatch).then(() => next(action));
-                    if (!getState().auth.isRefreshing) {
-                        return refreshToken(dispatch).then(() => next(action));
-                    } else {
-                        return next(action);
-                    }
+                  startRefreshingToken();
+                  // make sure we are not already refreshing the token
+                  //return refreshToken(dispatch).then(() => next(action));
+                  if (!getState().auth.isRefreshing) {
+                      return refreshToken(dispatch).then(() => next(action));
+                  } else {
+                      return next(action);
+                  }
                 }
             }
         }

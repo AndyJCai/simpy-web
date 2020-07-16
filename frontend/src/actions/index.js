@@ -9,7 +9,6 @@ import {
   CLEAR_SETTINGS,
   CLEAR_SPOTIFY_INFO,
   REFRESH_TOKEN,
-  DONE_REFRESHING_TOKEN,
   START_REFRESHING_TOKEN
 } from './types';
 import history from '../history';
@@ -44,12 +43,6 @@ export const refreshToken = (refreshToken) => async (dispatch) => {
 export const startRefreshingToken = () => {
   return {
     type: START_REFRESHING_TOKEN
-  }
-}
-
-export const doneRefreshingToken = () => {
-  return {
-    type: DONE_REFRESHING_TOKEN
   }
 }
 

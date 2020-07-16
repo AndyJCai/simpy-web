@@ -2,7 +2,6 @@ export const SIGN_IN = 'SIGN_IN';
 export const SIGN_OUT = 'SIGN_OUT';
 
 export const REFRESH_TOKEN = 'REFRESH_TOKEN';
-export const DONE_REFRESHING_TOKEN = 'DONE_REFRESHING_TOKEN';
 export const START_REFRESHING_TOKEN = 'START_REFRESHING_TOKEN';
 
 export const GET_NEWSFEED = 'GET_NEWSFEED';

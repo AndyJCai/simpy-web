@@ -46,12 +46,8 @@ export default (state = STARTING_STATE, action) => {
         timeStamp: action.timeStamp,
         expiresIn: action.expiresIn,
         accessToken: action.accessToken,
-        refreshToken: action.refreshToken
-      };
-    case DONE_REFRESHING_TOKEN:
-      return {
-        ...state,
-        isRefreshing: false,
+        refreshToken: action.refreshToken,
+        isRefreshing: false
       };
     default:
       return state;
