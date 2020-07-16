@@ -7,7 +7,8 @@ import {
   CHANGE_COLOR,
   STORE_SPOTIFY_INFO,
   CLEAR_SETTINGS,
-  CLEAR_SPOTIFY_INFO
+  CLEAR_SPOTIFY_INFO,
+  REFRESH_TOKEN
 } from './types';
 import history from '../history';
 
@@ -25,6 +26,14 @@ export const signOut = () => {
   return {
     type: SIGN_OUT
   }
+}
+
+export const refreshToken = (refreshToken) => async (dispatch) => {
+  dispatch ({
+    type: REFRESH_TOKEN,
+    accessToken: accessToken,
+    refreshToken: refreshToken
+  });
 }
 
 export const getNewsFeed = (userId) => async (dispatch) => {
