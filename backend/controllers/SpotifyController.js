@@ -38,7 +38,7 @@ router.get('/top/tracks/:user_id', auth, (req, res) => {
 		})
 		.catch((err) => {
 			console.log(err);
-			return res.status(500).send({ err : "Error getting user top tracks!" });
+			return res.status(401).send({ err : "Error getting user top tracks!" });
 		});
 });
 
@@ -70,7 +70,7 @@ router.get('/top/artists/:user_id', auth, (req, res) => {
 		})
 		.catch((err) => {
 			console.log(err);
-			return res.status(500).send({ err });
+			return res.status(401).send({ err: err });
 		});
 });
 
