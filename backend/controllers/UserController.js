@@ -147,7 +147,7 @@ router.get('/users/:user_id', auth, (req, res) => {
 		}
 		return res.status(200).json({ userData: mongoHandler.findUserById(user_id) });
 	} catch (err) {
-		res.status(500).json({ error: err });
+		res.status(400).json({ error: err });
 	}
 });
 
