@@ -70,9 +70,10 @@ router.get('/callback', async (req, res) => {
 						console.log(`usreId: ${userId}`);
 						console.log(`access_token: ${access_token}`);
 						console.log(`refresh_token: ${refresh_token}`);
+						console.log(`expires_in: ${expires_in}`);
 						return res
 							.status(301)
-							.redirect(`http://localhost:3000/auth/${access_token}/${refresh_token}/${userId}`);
+							.redirect(`http://localhost:3000/auth/${access_token}/${refresh_token}/${userId}/${expires_in}`);
 					});
 			})
 			.catch((err) => {
