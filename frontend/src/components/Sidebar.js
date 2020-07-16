@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import SettingsCog from "../resources/settings.svg";
-
+import { signOut, clearSettings, clearSpotifyInfo } from "../actions";
 const Wrapper = styled("div")`
 
   background: ${props => props.userColor};
@@ -55,6 +55,7 @@ const Prof = styled("div")`
 `;
 
 const Settings = styled("div")`
+  text-decoration: none;
   color: white;
   border-top: var(--primary-white) solid 1px;
   cursor: pointer;
@@ -126,6 +127,11 @@ const Friends = styled("div")`
 `;
 
 class Sidebar extends React.Component {
+  handleLogout() {
+    this.props.clearSettings();
+    this.props.clearSpotifyInfo();
+    this.props.signOut();
+  }
 
   render() {
     return (
@@ -137,6 +143,9 @@ class Sidebar extends React.Component {
             <Handle>@{this.props.spotifyId}</Handle>
             <Friends>{this.props.friends} Friends</Friends>
           </Prof>
+          <Settings>
+            <Link onClick={() => this.handleLogout()}>Logout</Link>
+          </Settings>
           <Settings>
             <Cog />
             <Link to={`/settings/${this.props.userId}`}>Settings</Link>
@@ -158,4 +167,4 @@ const mapStateToProps = (state) => {
   });
 };
 
-export default connect(mapStateToProps)(Sidebar);
+export default connect(mapStateToProps, { signOut, clearSettings, clearSpotifyInfo })(Sidebar);

@@ -5,7 +5,9 @@ import {
   GET_NEWSCARD,
   DELETE_NEWSCARD,
   CHANGE_COLOR,
-  STORE_SPOTIFY_INFO
+  STORE_SPOTIFY_INFO,
+  CLEAR_SETTINGS,
+  CLEAR_SPOTIFY_INFO
 } from './types';
 import history from '../history';
 
@@ -19,6 +21,7 @@ export const signIn = (userId, accessToken, refreshToken) => {
 }
 
 export const signOut = () => {
+  history.push('/');
   return {
     type: SIGN_OUT
   }
@@ -47,6 +50,12 @@ export const changeColor = (userColor) => {
   }
 }
 
+export const clearSettings = () => {
+  return {
+    type: CLEAR_SETTINGS
+  }
+}
+
 export const storeSpotifyInfo = (displayName, profilePic, friends, spotifyId, username) => {
   return {
     type: STORE_SPOTIFY_INFO,
@@ -55,5 +64,11 @@ export const storeSpotifyInfo = (displayName, profilePic, friends, spotifyId, us
     friends: friends,
     spotifyId: spotifyId,
     username: username
+  }
+}
+
+export const clearSpotifyInfo = () => {
+  return {
+    type: CLEAR_SPOTIFY_INFO
   }
 }
