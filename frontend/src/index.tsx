@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import reducers from "./reducers";
 import reduxThunk from "redux-thunk";
+import authMiddleware from "./authMiddleware";
 import { loadState, saveState } from './reducers/localStorage';
 import App from "./App";
 import throttle from 'lodash/throttle';
@@ -13,7 +14,7 @@ import throttle from 'lodash/throttle';
 const peristedState = loadState();
 
 const composeEnhancers = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] as typeof compose || compose;
-const store = createStore(reducers, peristedState,  composeEnhancers(applyMiddleware(reduxThunk)));
+const store = createStore(reducers, peristedState,  composeEnhancers(applyMiddleware(authMiddleware, reduxThunk)));
 
 store.subscribe(throttle(() => {
   saveState(store.getState());

@@ -8,16 +8,20 @@ import {
   STORE_SPOTIFY_INFO,
   CLEAR_SETTINGS,
   CLEAR_SPOTIFY_INFO,
-  REFRESH_TOKEN
+  REFRESH_TOKEN,
+  DONE_REFRESHING_TOKEN,
+  START_REFRESHING_TOKEN
 } from './types';
 import history from '../history';
 
-export const signIn = (userId, accessToken, refreshToken) => {
+export const signIn = (userId, accessToken, refreshToken, expiresIn, timeStamp) => {
   return {
     type: SIGN_IN,
     userId: userId,
     accessToken: accessToken,
-    refreshToken: refreshToken
+    refreshToken: refreshToken,
+    expiresIn: expiresIn,
+    timeStamp: timeStamp,
   }
 }
 
@@ -29,11 +33,24 @@ export const signOut = () => {
 }
 
 export const refreshToken = (refreshToken) => async (dispatch) => {
+  // add api call to refresh
   dispatch ({
     type: REFRESH_TOKEN,
     accessToken: accessToken,
     refreshToken: refreshToken
   });
+}
+
+export const startRefreshingToken = () => {
+  return {
+    type: START_REFRESHING_TOKEN
+  }
+}
+
+export const doneRefreshingToken = () => {
+  return {
+    type: DONE_REFRESHING_TOKEN
+  }
 }
 
 export const getNewsFeed = (userId) => async (dispatch) => {

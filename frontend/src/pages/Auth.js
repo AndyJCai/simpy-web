@@ -9,7 +9,9 @@ class Auth extends React.Component {
     const accessToken = params[2];
     const refreshToken = params[3];
     const userId = params[4];
-    this.props.signIn(userId, accessToken, refreshToken);
+    const expiresIn = params[5];
+    const timeStamp = new Date().getTime();
+    this.props.signIn(userId, accessToken, refreshToken, expiresIn, timeStamp);
     history.push(`/home/${userId}`);
   }
 
