@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { RouteComponentProps } from "react-router-dom";
 import { apiUrl } from '../Api';
+import { connect } from 'react-redux';
+import history from '../history';
 
 const Wrapper = styled("div")`
   height: 100vh;
@@ -133,7 +135,12 @@ bottom: 13.22%;
 background: #7953A9;
 `
 
-export default class Onboard extends React.Component {
+class Onboard extends React.Component {
+  componentDidMount() {
+    if(this.props.signedIn){
+      window.location.href = `/home/${this.props.userId}`;
+    }
+  }
   // refresh page for redirect to spotify
   spotifyLogin() {
     // this.props.history.push({
@@ -173,3 +180,12 @@ export default class Onboard extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return ({
+    signedIn: state.auth.isSignedIn,
+    userId: state.auth.userId,
+  });
+}
+
+export default connect(mapStateToProps)(Onboard);
