@@ -11,7 +11,7 @@ export function authMiddleware({ dispatch, getState }) {
                 const expiresIn = new Date(timeStamp.getTime() + getState().auth.expiresIn * 1000 + minutes * 60000);
                 const timeNow = new Date().getTime();
 
-                if (expiresIn && (expiresIn > timeNow))) {
+                if (expiresIn && (expiresIn > timeNow)) {
                   startRefreshingToken();
                   // make sure we are not already refreshing the token
                   //return refreshToken(dispatch).then(() => next(action));

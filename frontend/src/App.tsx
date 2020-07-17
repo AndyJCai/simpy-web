@@ -18,7 +18,7 @@ const App = () => {
           <Route exact path="/" component={Onboard} />
           <ProtectedRoute exact path="/home/:userId" component={Home} />
           <ProtectedRoute exact path="/settings/:userId" component={Settings} />
-          <Route exact path="/auth/:accessToken/:refreshToken/:userId" component={Auth} />
+          <Route exact path="/auth/:accessToken/:refreshToken/:userId/:expiresIn" component={Auth} />
           <Route exact path="/error/:errorMsg" component={Error} />
         </Switch>
       </Router>

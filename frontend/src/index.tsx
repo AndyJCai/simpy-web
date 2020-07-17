@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import reducers from "./reducers";
 import reduxThunk from "redux-thunk";
-import authMiddleware from "./authMiddleware";
+import { authMiddleware } from "./middleware/authMiddleware";
 import { loadState, saveState } from './reducers/localStorage';
 import App from "./App";
 import throttle from 'lodash/throttle';
