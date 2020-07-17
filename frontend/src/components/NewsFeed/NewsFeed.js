@@ -2,6 +2,20 @@ import React from "react";
 import { connect } from "react-redux";
 import { getNewsFeed } from "../../actions";
 import NewsCard from './NewsCard';
+import styled from "styled-components";
+
+const Wrapper = styled("div")`
+  display: flex;
+  width: 100%;
+  font-family: Helvetica, sans-serif;
+`;
+
+const ColumnContainer = styled("div")`
+  width: 100%;
+  display: flex;
+  flex-flow: column wrap;
+`;
+
 
 class NewsFeed extends React.Component {
   componentDidMount() {
@@ -22,9 +36,11 @@ class NewsFeed extends React.Component {
   render() {
     console.log(this.props.newsFeed);
     return (
-      <div>
-        {this.renderNewsFeedCards()}
-      </div>
+      <Wrapper>
+        <ColumnContainer>
+          {this.renderNewsFeedCards()}
+        </ColumnContainer>
+      </Wrapper>
     );
   }
 }

@@ -19,12 +19,14 @@ const MainPage = styled("div")`
   color: white;
   display: flex;
   flex-direction: column;
-  margin-left: 150px;
+  padding: 10vw;
+  width: 100%;
 `;
 
 const Sections = styled("div")`
   display: flex;
   flex-direction: row-reverse;
+  justify-content: space-around;
 `;
 
 class Home extends React.Component {
@@ -60,14 +62,12 @@ class Home extends React.Component {
     });
   }
 
-  SecTitles = styled("div")`
+  SecTitles = styled("h1")`
     color: ${props =>
       this.state.onFeed == props.val ? "var(--primary-white)" : "#676767"};
-    font-size: 64px;
     cursor: pointer;
     user-select: none;
     transition: 0.2s;
-    margin-right: 100px;
     &:hover {
       color: var(--primary-white);
     }
@@ -89,7 +89,6 @@ class Home extends React.Component {
 
   render() {
     return (
-      <>
         <Wrapper userColor={this.props.userColor}>
           <Sidebar />
           <MainPage>
@@ -104,7 +103,7 @@ class Home extends React.Component {
             {this.renderContent()}
           </MainPage>
         </Wrapper>
-      </>
+
     );
   }
 }

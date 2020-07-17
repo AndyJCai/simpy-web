@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Button } from '@material-ui/core';
 import SettingsCog from "../resources/settings.svg";
 import { signOut, clearSettings, clearSpotifyInfo } from "../actions";
 const Wrapper = styled("div")`
@@ -55,6 +56,9 @@ const Prof = styled("div")`
 `;
 
 const Settings = styled("div")`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-decoration: none;
   color: white;
   border-top: var(--primary-white) solid 1px;
@@ -73,7 +77,7 @@ const Cog = styled("div")`
   background-size: cover;
   width: 20px;
   height: 20px;
-  margin: 10px 12px 10px 40px;
+  margin-right: 10px;
   @media screen and (max-width: 1000px) {
     width: 15px;
     height: 15px;
@@ -86,6 +90,10 @@ const Cog = styled("div")`
     width: 12px;
     height: 12px;
   }
+`;
+
+const ButtonText = styled("div")`
+  color: white;
 `;
 
 const Name = styled("p")`
@@ -144,11 +152,22 @@ class Sidebar extends React.Component {
             <Friends>{this.props.friends} Friends</Friends>
           </Prof>
           <Settings>
-            <Link onClick={() => this.handleLogout()}>Logout</Link>
-          </Settings>
-          <Settings>
-            <Cog />
-            <Link to={`/settings/${this.props.userId}`}>Settings</Link>
+            <Button variant="outline" color="default" href={`/settings/${this.props.userId}`}>
+              <Cog />
+              <ButtonText>
+                Settings
+              </ButtonText>
+            </Button>
+            <Button variant="outline" color="default" href={`/home/${this.props.userId}`}>
+              <ButtonText>
+                Home
+              </ButtonText>
+            </Button>
+            <Button variant="outline" color="default" onClick={() => this.handleLogout()}>
+              <ButtonText>
+                Logout
+              </ButtonText>
+            </Button>
           </Settings>
         </Wrapper>
       </>

@@ -32,7 +32,6 @@ class Settings extends React.Component {
           <Container userColor={this.props.userColor}>
             <Title>settings</Title>
             <DisplaySettings />
-            <a href={`/home/${this.props.userId}`}>home</a>
           </Container>
         </Wrapper>
       );
