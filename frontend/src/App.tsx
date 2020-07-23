@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Settings from "./pages/Settings";
 import Auth from "./pages/Auth";
 import Error from "./pages/Error";
+import BubbleChart from "./bubble/BubbleChart";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 import history from "./history";
@@ -18,6 +19,7 @@ const App = () => {
           <Route exact path="/" component={Onboard} />
           <ProtectedRoute exact path="/home/:userId" component={Home} />
           <ProtectedRoute exact path="/settings/:userId" component={Settings} />
+          <ProtectedRoute exact path="/testbubbles" component={BubbleChart} />
           <Route exact path="/auth/:accessToken/:refreshToken/:userId/:expiresIn" component={Auth} />
           <Route exact path="/error/:errorMsg" component={Error} />
         </Switch>
