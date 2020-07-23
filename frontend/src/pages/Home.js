@@ -7,6 +7,7 @@ import {apiUrl } from '../Api';
 
 import Sidebar from "../components/Sidebar";
 import NewsFeed from "../components/NewsFeed/NewsFeed";
+import VibeCheck from "../components/VibeCheck/VibeCheck";
 
 const Wrapper = styled("div")`
   display: flex;
@@ -82,7 +83,7 @@ class Home extends React.Component {
 
   renderContent() {
     if(this.state.onFeed == 0){
-      return <div>Vibe Check</div>
+      return <VibeCheck />
     }
     return <NewsFeed />
   }
